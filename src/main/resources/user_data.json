@@ -1,0 +1,18 @@
+[
+  {
+    "id": 181,
+    "name": "Карасевич",
+    "position": "врач",
+    "cabinet": 202,
+    "department": "Платные Услуги",
+    "pcName": "kab202"
+  },
+  {
+    "id": 180,
+    "name": "Краскова",
+    "position": "врач",
+    "cabinet": 340,
+    "department": "ТО №3",
+    "pcName": "kab340-2"
+  }
+]

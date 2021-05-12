@@ -1,0 +1,42 @@
+[
+  {
+    "id": 174,
+    "name": "HP LaserJet 1606dn",
+    "cartridge": "78a / 728",
+    "cabinet": 119,
+    "connectionType": "USB",
+    "ipAddress": ""
+  },
+  {
+    "id": 175,
+    "name": "HP LaserJet 1606dn",
+    "cartridge": "78a / 728",
+    "cabinet": 118,
+    "connectionType": "USB",
+    "ipAddress": ""
+  },
+  {
+    "id": 176,
+    "name": "HP LaserJet 1606dn",
+    "cartridge": "78a / 728",
+    "cabinet": 117,
+    "connectionType": "USB",
+    "ipAddress": ""
+  },
+  {
+    "id": 177,
+    "name": "HP LaserJet 1606dn",
+    "cartridge": "78a / 728",
+    "cabinet": 116,
+    "connectionType": "USB",
+    "ipAddress": ""
+  },
+  {
+    "id": 178,
+    "name": "HP LaserJet 1606dn",
+    "cartridge": "78a / 728",
+    "cabinet": 120,
+    "connectionType": "USB",
+    "ipAddress": ""
+  }
+]

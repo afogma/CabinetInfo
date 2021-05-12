@@ -1,0 +1,107 @@
+[
+  {
+    "number": 103,
+    "floor": 1,
+    "department": "Statistics"
+  },
+  {
+    "number": 104,
+    "floor": 1,
+    "department": "Statistics"
+  },
+  {
+    "number": 107,
+    "floor": 1,
+    "department": "ЖК"
+  },
+  {
+    "number": 109,
+    "floor": 1,
+    "department": "ЖК"
+  },
+  {
+    "number": 169,
+    "floor": 1,
+    "department": "IT"
+  },
+  {
+    "number": 170,
+    "floor": 55,
+    "department": ""
+  },
+  {
+    "number": 211,
+    "floor": 2,
+    "department": "Регистратура"
+  },
+  {
+    "number": 212,
+    "floor": 2,
+    "department": "Регистратура"
+  },
+  {
+    "number": 213,
+    "floor": 2,
+    "department": "Регистратура ЖК"
+  },
+  {
+    "number": 227,
+    "floor": 2,
+    "department": "Хирургия"
+  },
+  {
+    "number": 310,
+    "floor": 3,
+    "department": "Хирургия"
+  },
+  {
+    "number": 313,
+    "floor": 3,
+    "department": "Хирургия"
+  },
+  {
+    "number": 314,
+    "floor": 3,
+    "department": "Хирургия"
+  },
+  {
+    "number": 319,
+    "floor": 3,
+    "department": "Стоматология"
+  },
+  {
+    "number": 323,
+    "floor": 3,
+    "department": "Стоматология"
+  },
+  {
+    "number": 325,
+    "floor": 3,
+    "department": "стома толо гия"
+  },
+  {
+    "number": 326,
+    "floor": 3,
+    "department": "Зав. ТО№4"
+  },
+  {
+    "number": 327,
+    "floor": 3,
+    "department": "Зав. ТО№3"
+  },
+  {
+    "number": 333,
+    "floor": 3,
+    "department": "ТО №3"
+  },
+  {
+    "number": 517,
+    "floor": 5,
+    "department": "Хирургия"
+  },
+  {
+    "number": 518,
+    "floor": 5,
+    "department": "Хирургия"
+  }
+]

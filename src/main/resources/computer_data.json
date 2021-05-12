@@ -1,0 +1,65 @@
+[
+  {
+    "name": "333-2",
+    "ram": "1gb",
+    "processor": "intel core 2 duo",
+    "ipAddress": "10.70.62.45",
+    "cabinet": 333,
+    "login": "k227",
+    "password": "k227"
+  },
+  {
+    "name": "kab227",
+    "ram": "1gb",
+    "processor": "intel core 2 duo",
+    "ipAddress": "10.70.62.45",
+    "cabinet": 227,
+    "login": "k22711",
+    "password": "ahzch3"
+  },
+  {
+    "name": "kab333",
+    "ram": "1gb",
+    "processor": "intel core 2 duo",
+    "ipAddress": "10.70.62.188",
+    "cabinet": 333,
+    "login": "k333",
+    "password": "ahaha"
+  },
+  {
+    "name": "kab338",
+    "ram": "1gb",
+    "processor": "intel core 2 duo",
+    "ipAddress": "10.70.62.48",
+    "cabinet": 338,
+    "login": "k338",
+    "password": "zh0p4"
+  },
+  {
+    "name": "kab340",
+    "ram": "1gb",
+    "processor": "intel core 2 duo",
+    "ipAddress": "10.70.62.146",
+    "cabinet": 340,
+    "login": "k340",
+    "password": "pdrsk1"
+  },
+  {
+    "name": "kab340-2",
+    "ram": "1gb",
+    "processor": "intel core 2 duo",
+    "ipAddress": "10.70.62.48",
+    "cabinet": 340,
+    "login": "k340-2",
+    "password": "zh0p4"
+  },
+  {
+    "name": "kab340-3",
+    "ram": "1gb",
+    "processor": "intel core 2 duo",
+    "ipAddress": "10.70.62.48",
+    "cabinet": 0,
+    "login": "k340-3",
+    "password": "zh0p4"
+  }
+]
