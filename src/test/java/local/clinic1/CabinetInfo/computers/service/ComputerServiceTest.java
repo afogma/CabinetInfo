@@ -1,7 +1,8 @@
 package local.clinic1.CabinetInfo.computers.service;
 
-import local.clinic1.CabinetInfo.computers.entity.Computer;
-import local.clinic1.CabinetInfo.computers.repository.ComputerRepo;
+import local.clinic1.CabinetInfo.computers.Computer;
+import local.clinic1.CabinetInfo.computers.ComputerRepo;
+import local.clinic1.CabinetInfo.computers.ComputerService;
 import local.clinic1.CabinetInfo.exceptions.ComputerAlreadyExistException;
 import local.clinic1.CabinetInfo.exceptions.ComputerNotFoundException;
 import org.junit.jupiter.api.Test;

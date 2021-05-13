@@ -1,14 +1,10 @@
 package local.clinic1.CabinetInfo.users.service;
 
-import local.clinic1.CabinetInfo.cabinets.entity.Cabinet;
-import local.clinic1.CabinetInfo.cabinets.repository.CabinetRepo;
-import local.clinic1.CabinetInfo.cabinets.service.CabinetService;
-import local.clinic1.CabinetInfo.exceptions.CabinetAlreadyExistException;
-import local.clinic1.CabinetInfo.exceptions.CabinetNotFoundException;
 import local.clinic1.CabinetInfo.exceptions.UserAlreadyExistException;
 import local.clinic1.CabinetInfo.exceptions.UserNotFoundException;
-import local.clinic1.CabinetInfo.users.entity.User;
-import local.clinic1.CabinetInfo.users.repository.UserRepo;
+import local.clinic1.CabinetInfo.users.User;
+import local.clinic1.CabinetInfo.users.UserRepo;
+import local.clinic1.CabinetInfo.users.UserService;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;

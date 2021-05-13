@@ -1,9 +1,7 @@
-package local.clinic1.CabinetInfo.cabinets.service;
+package local.clinic1.CabinetInfo.cabinets;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import local.clinic1.CabinetInfo.cabinets.entity.Cabinet;
-import local.clinic1.CabinetInfo.cabinets.repository.CabinetRepo;
 import local.clinic1.CabinetInfo.exceptions.CabinetNotFoundException;
 import local.clinic1.CabinetInfo.exceptions.CabinetAlreadyExistException;
 import local.clinic1.CabinetInfo.exceptions.URLNotValidException;

@@ -1,8 +1,7 @@
-package local.clinic1.CabinetInfo.cabinets.repository;
+package local.clinic1.CabinetInfo.cabinets;
 
-import local.clinic1.CabinetInfo.cabinets.entity.Cabinet;
+import local.clinic1.CabinetInfo.cabinets.Cabinet;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
 

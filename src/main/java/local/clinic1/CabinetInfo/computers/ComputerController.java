@@ -1,27 +1,21 @@
-package local.clinic1.CabinetInfo.computers.controller;
+package local.clinic1.CabinetInfo.computers;
 
-import local.clinic1.CabinetInfo.computers.entity.Computer;
-import local.clinic1.CabinetInfo.computers.service.ComputerService;
 import local.clinic1.CabinetInfo.exceptions.ComputerAlreadyExistException;
 import local.clinic1.CabinetInfo.exceptions.ComputerNotFoundException;
 import local.clinic1.CabinetInfo.exceptions.URLNotValidException;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@RequiredArgsConstructor
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RequestMapping("/computers")
 public class ComputerController {
 
     private final ComputerService computerService;
-
-    @Autowired
-    public ComputerController(ComputerService computerService) {
-        this.computerService = computerService;
-    }
 
     @GetMapping
     public List<Computer> showAllComputers() {

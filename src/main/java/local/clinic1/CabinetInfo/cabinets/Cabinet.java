@@ -1,4 +1,4 @@
-package local.clinic1.CabinetInfo.cabinets.entity;
+package local.clinic1.CabinetInfo.cabinets;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

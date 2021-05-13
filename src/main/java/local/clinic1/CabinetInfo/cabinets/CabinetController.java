@@ -1,8 +1,5 @@
-package local.clinic1.CabinetInfo.cabinets.controller;
+package local.clinic1.CabinetInfo.cabinets;
 
-import local.clinic1.CabinetInfo.auth.SystemUser;
-import local.clinic1.CabinetInfo.cabinets.entity.Cabinet;
-import local.clinic1.CabinetInfo.cabinets.service.CabinetService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +19,8 @@ public class CabinetController {
     }
 
     @GetMapping
-    public List<Cabinet> showCabinetList(SystemUser user) {
+//    public List<Cabinet> showCabinetList(SystemUser user) {
+    public List<Cabinet> showCabinetList() {
         return cabinetService.findAll();
     }
 

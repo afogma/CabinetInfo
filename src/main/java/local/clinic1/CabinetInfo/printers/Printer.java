@@ -1,4 +1,4 @@
-package local.clinic1.CabinetInfo.printers.entity;
+package local.clinic1.CabinetInfo.printers;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -27,4 +27,9 @@ public class Printer {
     @Column(name = "ip_address")
     private String ipAddress;
 
+    public enum ConnectionType {
+        LAN,
+        USB,
+        WIFI;
+    }
 }

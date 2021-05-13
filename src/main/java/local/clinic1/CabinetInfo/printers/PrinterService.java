@@ -1,4 +1,4 @@
-package local.clinic1.CabinetInfo.printers.service;
+package local.clinic1.CabinetInfo.printers;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -6,8 +6,6 @@ import local.clinic1.CabinetInfo.exceptions.PrinterAlreadyExistException;
 import local.clinic1.CabinetInfo.exceptions.PrinterNotFoundException;
 import local.clinic1.CabinetInfo.exceptions.PrintersNotFoundException;
 import local.clinic1.CabinetInfo.exceptions.URLNotValidException;
-import local.clinic1.CabinetInfo.printers.entity.Printer;
-import local.clinic1.CabinetInfo.printers.repository.PrinterRepo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

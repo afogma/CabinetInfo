@@ -1,9 +1,7 @@
-package local.clinic1.CabinetInfo.computers.service;
+package local.clinic1.CabinetInfo.computers;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import local.clinic1.CabinetInfo.computers.entity.Computer;
-import local.clinic1.CabinetInfo.computers.repository.ComputerRepo;
 import local.clinic1.CabinetInfo.exceptions.ComputerAlreadyExistException;
 import local.clinic1.CabinetInfo.exceptions.ComputerNotFoundException;
 import local.clinic1.CabinetInfo.exceptions.URLNotValidException;

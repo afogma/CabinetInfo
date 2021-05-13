@@ -1,18 +1,15 @@
 package local.clinic1.CabinetInfo.printers.service;
 
-import local.clinic1.CabinetInfo.cabinets.entity.Cabinet;
-import local.clinic1.CabinetInfo.exceptions.CabinetAlreadyExistException;
-import local.clinic1.CabinetInfo.exceptions.CabinetNotFoundException;
 import local.clinic1.CabinetInfo.exceptions.PrinterAlreadyExistException;
 import local.clinic1.CabinetInfo.exceptions.PrinterNotFoundException;
-import local.clinic1.CabinetInfo.printers.entity.Printer;
-import local.clinic1.CabinetInfo.printers.repository.PrinterRepo;
+import local.clinic1.CabinetInfo.printers.Printer;
+import local.clinic1.CabinetInfo.printers.PrinterRepo;
+import local.clinic1.CabinetInfo.printers.PrinterService;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
 import static java.util.Arrays.asList;
-import static local.clinic1.CabinetInfo.printers.entity.ConnectionType.USB;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
@@ -28,7 +25,7 @@ class PrinterServiceTest {
         printer.setName("HP LaserJet 1606dn");
         printer.setCartridge("78a / 728");
         printer.setCabinet(333);
-        printer.setConnectionType(USB);
+        printer.setConnectionType(Printer.ConnectionType.USB);
         printer.setIpAddress("");
         return printer;
     }
@@ -79,7 +76,7 @@ class PrinterServiceTest {
         newPrinter.setName("HP LaserJet 1606dn copy");
         newPrinter.setCartridge("78a/728");
         newPrinter.setCabinet(335);
-        printer.setConnectionType(USB);
+        printer.setConnectionType(Printer.ConnectionType.USB);
         printer.setIpAddress("");
         when(printerRepo.findPrinterById(1L)).thenReturn(printer);
         when(printerRepo.save(newPrinter)).thenReturn(newPrinter);

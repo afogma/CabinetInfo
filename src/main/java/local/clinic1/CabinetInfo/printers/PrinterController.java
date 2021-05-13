@@ -1,28 +1,22 @@
-package local.clinic1.CabinetInfo.printers.controller;
+package local.clinic1.CabinetInfo.printers;
 
 import local.clinic1.CabinetInfo.exceptions.PrinterAlreadyExistException;
 import local.clinic1.CabinetInfo.exceptions.PrinterNotFoundException;
 import local.clinic1.CabinetInfo.exceptions.PrintersNotFoundException;
 import local.clinic1.CabinetInfo.exceptions.URLNotValidException;
-import local.clinic1.CabinetInfo.printers.entity.Printer;
-import local.clinic1.CabinetInfo.printers.service.PrinterService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@RequiredArgsConstructor
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RequestMapping("/printers")
 public class PrinterController {
 
     private final PrinterService printerService;
-
-    @Autowired
-    public PrinterController(PrinterService printerService) {
-        this.printerService = printerService;
-    }
 
     @GetMapping
     public List<Printer> showAllPrinters() {

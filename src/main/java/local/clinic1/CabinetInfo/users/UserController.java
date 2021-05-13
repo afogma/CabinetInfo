@@ -1,26 +1,19 @@
-package local.clinic1.CabinetInfo.users.controller;
+package local.clinic1.CabinetInfo.users;
 
 import local.clinic1.CabinetInfo.exceptions.*;
-import local.clinic1.CabinetInfo.printers.entity.Printer;
-import local.clinic1.CabinetInfo.users.entity.User;
-import local.clinic1.CabinetInfo.users.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@RequiredArgsConstructor
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RequestMapping("/users")
 public class UserController {
 
     private final UserService userService;
-
-    @Autowired
-    public UserController(UserService userService) {
-        this.userService = userService;
-    }
 
     @GetMapping
     public List<User> showAllPrinters() {

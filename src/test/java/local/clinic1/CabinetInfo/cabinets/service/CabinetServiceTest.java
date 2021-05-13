@@ -1,8 +1,9 @@
 package local.clinic1.CabinetInfo.cabinets.service;
 
-import local.clinic1.CabinetInfo.cabinets.entity.Cabinet;
-import local.clinic1.CabinetInfo.cabinets.repository.CabinetRepo;
+import local.clinic1.CabinetInfo.cabinets.Cabinet;
+import local.clinic1.CabinetInfo.cabinets.CabinetRepo;
 
+import local.clinic1.CabinetInfo.cabinets.CabinetService;
 import local.clinic1.CabinetInfo.exceptions.CabinetAlreadyExistException;
 import local.clinic1.CabinetInfo.exceptions.CabinetNotFoundException;
 import org.junit.jupiter.api.Test;

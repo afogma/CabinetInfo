@@ -1,10 +1,8 @@
-package local.clinic1.CabinetInfo.users.service;
+package local.clinic1.CabinetInfo.users;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import local.clinic1.CabinetInfo.exceptions.*;
-import local.clinic1.CabinetInfo.users.entity.User;
-import local.clinic1.CabinetInfo.users.repository.UserRepo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

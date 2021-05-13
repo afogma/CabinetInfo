@@ -1,6 +1,6 @@
-package local.clinic1.CabinetInfo.computers.repository;
+package local.clinic1.CabinetInfo.computers;
 
-import local.clinic1.CabinetInfo.computers.entity.Computer;
+import local.clinic1.CabinetInfo.computers.Computer;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
