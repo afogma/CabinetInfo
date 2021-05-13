@@ -24,18 +24,18 @@ public class PrinterController {
     }
 
     @PostMapping
-    public ResponseEntity registration(@RequestBody Printer printer) throws PrinterAlreadyExistException {
+    public ResponseEntity registration(@RequestBody Printer printer) {
         printerService.addNewPrinter(printer);
         return ResponseEntity.ok("Printer was added");
     }
 
     @PostMapping("/{name}")
-    public List<Printer> showAllByName(@PathVariable String name) throws PrintersNotFoundException {
+    public List<Printer> showAllByName(@PathVariable String name) {
         return printerService.findAllByName(name);
     }
 
     @PostMapping("/filter")
-    public List<Printer> showAllByCabinet(@RequestParam int cabinet) throws PrintersNotFoundException {
+    public List<Printer> showAllByCabinet(@RequestParam int cabinet){
         return printerService.findAllByCabinet(cabinet);
     }
 
@@ -46,7 +46,7 @@ public class PrinterController {
     }
 
     @DeleteMapping("/del")
-    public ResponseEntity deletePrinter(@RequestParam Long id) throws PrinterNotFoundException {
+    public ResponseEntity deletePrinter(@RequestParam Long id) {
         printerService.deletePrinter(id);
         return ResponseEntity.ok("Printer removed");
     }

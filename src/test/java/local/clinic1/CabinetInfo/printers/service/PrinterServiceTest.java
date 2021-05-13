@@ -3,6 +3,7 @@ package local.clinic1.CabinetInfo.printers.service;
 import local.clinic1.CabinetInfo.exceptions.PrinterAlreadyExistException;
 import local.clinic1.CabinetInfo.exceptions.PrinterNotFoundException;
 import local.clinic1.CabinetInfo.printers.Printer;
+import local.clinic1.CabinetInfo.printers.PrinterDTO;
 import local.clinic1.CabinetInfo.printers.PrinterRepo;
 import local.clinic1.CabinetInfo.printers.PrinterService;
 import org.junit.jupiter.api.Test;
@@ -42,6 +43,12 @@ class PrinterServiceTest {
     @Test
     void addNewPrinter() {
         Printer printer = getPrinter();
+        String name = printer.getName();
+        String cartridge = printer.getCartridge();
+        int cabinet = printer.getCabinet();
+        Printer.ConnectionType connectionType = printer.getConnectionType();
+        String ipaddress = printer.getIpAddress();
+        PrinterDTO dtoPrinter = new PrinterDTO(name, cartridge, cabinet, connectionType, ipaddress);
         when(printerRepo.save(printer)).thenReturn(printer);
         Printer newPrinter = printerService.addNewPrinter(printer);
         assertEquals(printer, newPrinter);

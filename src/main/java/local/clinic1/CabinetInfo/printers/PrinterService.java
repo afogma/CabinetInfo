@@ -31,10 +31,13 @@ public class PrinterService {
         return printers;
     }
 
-    public Printer addNewPrinter(Printer printer) throws PrinterAlreadyExistException {
-        if (printerRepo.existsById(printer.getId())) {
-            throw new PrinterAlreadyExistException();
-        }
+    public Printer addNewPrinter(Printer printer) {
+//        String name = dtoPrinter.getName();
+//        String cartridge = dtoPrinter.getCartridge();
+//        int cabinet = dtoPrinter.getCabinet();
+//        Printer.ConnectionType connectionType = dtoPrinter.getConnectionType();
+//        String ipAddress = dtoPrinter.getIpAddress();
+//        Printer printer = new Printer(0L, name, cartridge, cabinet, connectionType, ipAddress);
         Printer print = printerRepo.save(printer);
         logger.info("{} added", print);
         return print;

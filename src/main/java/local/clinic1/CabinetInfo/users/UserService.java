@@ -28,6 +28,8 @@ public class UserService {
         return users;
     }
 
+
+
     public User addNewUser(User user) throws UserAlreadyExistException {
         if (userRepo.existsById(user.getId())) {
             throw new UserAlreadyExistException();
@@ -39,6 +41,14 @@ public class UserService {
 
     public User findByName(String name) throws UserNotFoundException {
         User user = userRepo.findByName(name);
+        if (user == null) {
+            throw new UserNotFoundException();
+        }
+        return user;
+    }
+
+    public User findById(Long id) throws UserNotFoundException {
+        User user = userRepo.findUserById(id);
         if (user == null) {
             throw new UserNotFoundException();
         }
