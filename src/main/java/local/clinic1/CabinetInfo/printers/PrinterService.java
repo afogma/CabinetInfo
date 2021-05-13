@@ -2,14 +2,12 @@ package local.clinic1.CabinetInfo.printers;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import local.clinic1.CabinetInfo.exceptions.PrinterAlreadyExistException;
 import local.clinic1.CabinetInfo.exceptions.PrinterNotFoundException;
 import local.clinic1.CabinetInfo.exceptions.PrintersNotFoundException;
 import local.clinic1.CabinetInfo.exceptions.URLNotValidException;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
@@ -32,18 +30,20 @@ public class PrinterService {
     }
 
     public Printer addNewPrinter(Printer printer) {
-//        String name = dtoPrinter.getName();
-//        String cartridge = dtoPrinter.getCartridge();
-//        int cabinet = dtoPrinter.getCabinet();
-//        Printer.ConnectionType connectionType = dtoPrinter.getConnectionType();
-//        String ipAddress = dtoPrinter.getIpAddress();
-//        Printer printer = new Printer(0L, name, cartridge, cabinet, connectionType, ipAddress);
         Printer print = printerRepo.save(printer);
         logger.info("{} added", print);
         return print;
     }
 
-    public List<Printer> findAllByName(String name) throws PrintersNotFoundException {
+    public Printer findPrinterById(Long id) {
+        Printer printer = printerRepo.findPrinterById(id);
+        if (printer == null) {
+            throw new PrinterNotFoundException();
+        }
+        return printer;
+    }
+
+    public List<Printer> findAllByName(String name) {
         List<Printer> printers = printerRepo.findByName(name);
         if (printers.isEmpty()) {
             throw new PrintersNotFoundException();
@@ -51,7 +51,7 @@ public class PrinterService {
         return printers;
     }
 
-    public List<Printer> findAllByCabinet(int cabinet) throws PrintersNotFoundException {
+    public List<Printer> findAllByCabinet(int cabinet) {
         List <Printer> printers = printerRepo.findByCabinet(cabinet);
         if (printers.isEmpty()) {
             throw new PrintersNotFoundException();
@@ -72,7 +72,7 @@ public class PrinterService {
         return newPrinter;
     }
 
-    public void deletePrinter(Long id) throws PrinterNotFoundException {
+    public void deletePrinter(Long id) {
         Printer printer = printerRepo.findPrinterById(id);
         if (printer == null) {
             throw new PrinterNotFoundException();

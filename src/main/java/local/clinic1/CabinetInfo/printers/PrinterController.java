@@ -1,9 +1,5 @@
 package local.clinic1.CabinetInfo.printers;
 
-import local.clinic1.CabinetInfo.exceptions.PrinterAlreadyExistException;
-import local.clinic1.CabinetInfo.exceptions.PrinterNotFoundException;
-import local.clinic1.CabinetInfo.exceptions.PrintersNotFoundException;
-import local.clinic1.CabinetInfo.exceptions.URLNotValidException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +17,11 @@ public class PrinterController {
     @GetMapping
     public List<Printer> showAllPrinters() {
         return printerService.findAll();
+    }
+
+    @GetMapping("/{id}")
+    public Printer showPrinterById(@PathVariable Long id) {
+        return printerService.findPrinterById(id);
     }
 
     @PostMapping
@@ -52,7 +53,7 @@ public class PrinterController {
     }
 
     @GetMapping("/json")
-    public ResponseEntity addDataFromJson() throws URLNotValidException {
+    public ResponseEntity addDataFromJson() {
         printerService.loadFromJson();
         return ResponseEntity.ok("JSON data loaded");
     }

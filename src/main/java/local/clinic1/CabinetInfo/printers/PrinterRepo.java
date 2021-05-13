@@ -1,6 +1,5 @@
 package local.clinic1.CabinetInfo.printers;
 
-import local.clinic1.CabinetInfo.printers.Printer;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
