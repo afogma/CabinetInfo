@@ -6,6 +6,7 @@ import local.clinic1.CabinetInfo.exceptions.CabinetNotFoundException;
 import local.clinic1.CabinetInfo.exceptions.CabinetAlreadyExistException;
 import local.clinic1.CabinetInfo.exceptions.URLNotValidException;
 import local.clinic1.CabinetInfo.exceptions.WrongInputException;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,16 +20,12 @@ import java.util.Comparator;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class CabinetService {
 
     Logger logger = LoggerFactory.getLogger(CabinetService.class);
 
     private final CabinetRepo cabinetRepo;
-
-    @Autowired
-    public CabinetService(CabinetRepo cabinetRepo) {
-        this.cabinetRepo = cabinetRepo;
-    }
 
     public Cabinet findByNumber(int number) {
         Cabinet cab = cabinetRepo.findByNumber(number);

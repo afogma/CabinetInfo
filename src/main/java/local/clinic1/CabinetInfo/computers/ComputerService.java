@@ -6,6 +6,7 @@ import local.clinic1.CabinetInfo.exceptions.ComputerAlreadyExistException;
 import local.clinic1.CabinetInfo.exceptions.ComputerNotFoundException;
 import local.clinic1.CabinetInfo.exceptions.URLNotValidException;
 import local.clinic1.CabinetInfo.exceptions.WrongInputException;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,16 +20,12 @@ import java.util.Comparator;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class ComputerService {
 
     Logger logger = LoggerFactory.getLogger(ComputerService.class);
 
     private final ComputerRepo computerRepo;
-
-    @Autowired
-    public ComputerService(ComputerRepo computerRepo) {
-        this.computerRepo = computerRepo;
-    }
 
     public Computer findPCByName(String name) throws ComputerNotFoundException {
         Computer pc = computerRepo.findByName(name);

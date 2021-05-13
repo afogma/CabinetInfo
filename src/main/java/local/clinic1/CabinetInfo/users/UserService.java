@@ -3,6 +3,7 @@ package local.clinic1.CabinetInfo.users;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import local.clinic1.CabinetInfo.exceptions.*;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,15 +16,11 @@ import java.util.Comparator;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class UserService {
 
     Logger logger = LoggerFactory.getLogger(UserService.class);
     private final UserRepo userRepo;
-
-    @Autowired
-    public UserService(UserRepo userRepo) {
-        this.userRepo = userRepo;
-    }
 
     public List<User> findAll() {
         List<User> users = userRepo.findAll();

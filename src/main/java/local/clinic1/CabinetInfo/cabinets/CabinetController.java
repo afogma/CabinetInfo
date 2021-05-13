@@ -1,5 +1,6 @@
 package local.clinic1.CabinetInfo.cabinets;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -9,14 +10,10 @@ import java.util.List;
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RequestMapping("/cabinets")
+@RequiredArgsConstructor
 public class CabinetController {
 
     private final CabinetService cabinetService;
-
-    @Autowired
-    public CabinetController(CabinetService cabinetService) {
-        this.cabinetService = cabinetService;
-    }
 
     @GetMapping
 //    public List<Cabinet> showCabinetList(SystemUser user) {
@@ -29,21 +26,10 @@ public class CabinetController {
         return cabinetService.findByNumber(number);
     }
 
-//    @GetMapping("/filter")
-//    public List<Cabinet> findAllCabinetsByFloor(@RequestParam Integer floor) throws ComputerNotFoundException {
-//        return cabinetService.showCabinetsByFloor(floor);
-//    }
-//
-//    @GetMapping("/filter/")
-//    public List<Cabinet> findAllCabinetsByDepartment(@RequestParam String department) {
-//        return cabinetService.showCabinetsByDepartment(department);
-//    }
-
     @GetMapping("/filter")
     public List<Cabinet> showAllCabinetsByFloorOrDepartment(@RequestParam(required = false) String department, @RequestParam(required = false) Integer floor) {
         return cabinetService.findAllByFloorOrDepartment(department, floor);
     }
-
 
     @PostMapping
     public ResponseEntity registration(@RequestBody Cabinet cab) {

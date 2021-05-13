@@ -1,6 +1,5 @@
 package local.clinic1.CabinetInfo.cabinets;
 
-import local.clinic1.CabinetInfo.cabinets.Cabinet;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

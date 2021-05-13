@@ -74,7 +74,13 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
 
     @ExceptionHandler(WrongInputException.class)
     public ResponseEntity<String> handleWrongInputException(Exception ex, WebRequest request) {
-        if (ex instanceof WrongInputException) return new ResponseEntity<>("wrong input", new HttpHeaders(), HttpStatus.NOT_FOUND);
+        if (ex instanceof WrongInputException) return new ResponseEntity<>("Wrong input", new HttpHeaders(), HttpStatus.NOT_FOUND);
+        return new ResponseEntity<String>("Other error", HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(AuthenticationFailedException.class)
+    public ResponseEntity<String> handleAuthenticationFailedException(Exception ex, WebRequest request) {
+        if (ex instanceof AuthenticationFailedException) return new ResponseEntity<>("Authentication failed", new HttpHeaders(), HttpStatus.UNAUTHORIZED);
         return new ResponseEntity<String>("Other error", HttpStatus.INTERNAL_SERVER_ERROR);
     }
 

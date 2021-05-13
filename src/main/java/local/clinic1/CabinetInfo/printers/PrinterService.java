@@ -6,6 +6,7 @@ import local.clinic1.CabinetInfo.exceptions.PrinterAlreadyExistException;
 import local.clinic1.CabinetInfo.exceptions.PrinterNotFoundException;
 import local.clinic1.CabinetInfo.exceptions.PrintersNotFoundException;
 import local.clinic1.CabinetInfo.exceptions.URLNotValidException;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,15 +19,11 @@ import java.util.Comparator;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class PrinterService {
 
     Logger logger = LoggerFactory.getLogger(PrinterService.class);
     private final PrinterRepo printerRepo;
-
-    @Autowired
-    public PrinterService(PrinterRepo printerRepo) {
-        this.printerRepo = printerRepo;
-    }
 
     public List<Printer> findAll() {
         List<Printer> printers = printerRepo.findAll();

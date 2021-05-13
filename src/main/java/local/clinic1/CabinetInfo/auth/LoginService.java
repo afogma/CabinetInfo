@@ -1,5 +1,6 @@
 package local.clinic1.CabinetInfo.auth;
 
+import local.clinic1.CabinetInfo.exceptions.AuthenticationFailedException;
 import local.clinic1.CabinetInfo.exceptions.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -26,9 +27,9 @@ public class LoginService {
 
     public UserSession login(Login login) {
         SystemUser user = systemUserRepo.findByName(login.getUser());
-        if (user == null) return null;
+        if (user == null) throw new AuthenticationFailedException();;
 
-        if (!bCryptPasswordEncoder.matches(login.getPassword(), user.getPassword())) return null;
+        if (!bCryptPasswordEncoder.matches(login.getPassword(), user.getPassword())) throw new AuthenticationFailedException();;
 
         UserSession session = new UserSession(login.getUser());
         sessions.put(session.getSessionId(), session);
@@ -38,10 +39,10 @@ public class LoginService {
     public UserSession getSession(String session, String token) {
         UserSession s = sessions.get(session);
         if (s == null) {
-            return null;
+            throw new AuthenticationFailedException();
         }
         if (!s.getToken().equals(token)) {
-            return null;
+            throw new AuthenticationFailedException();
         }
         return s;
     }
@@ -49,8 +50,7 @@ public class LoginService {
     public SystemUser getUser(String session, String token) {
         UserSession s = getSession(session, token);
         if (s == null) {
-//            return null;
-            throw new UserNotFoundException();
+            throw new AuthenticationFailedException();
         }
         String userName = s.getUserName();
         SystemUser user = systemUserRepo.findByName(userName);
