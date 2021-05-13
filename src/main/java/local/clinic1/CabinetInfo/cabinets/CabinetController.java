@@ -1,7 +1,8 @@
 package local.clinic1.CabinetInfo.cabinets;
 
+import local.clinic1.CabinetInfo.auth.SystemUser;
+import local.clinic1.CabinetInfo.exceptions.AuthenticationFailedException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,13 +17,16 @@ public class CabinetController {
     private final CabinetService cabinetService;
 
     @GetMapping
-//    public List<Cabinet> showCabinetList(SystemUser user) {
-    public List<Cabinet> showCabinetList() {
+    public List<Cabinet> showCabinetList(SystemUser user) {
+//    public List<Cabinet> showCabinetList() {
+        if (!user.isAdmin()) {
+            throw new AuthenticationFailedException();
+        }
         return cabinetService.findAll();
     }
 
     @GetMapping("/{number}")
-    public Cabinet showCabinetByNumber(@PathVariable int number){
+    public Cabinet showCabinetByNumber(@PathVariable int number) {
         return cabinetService.findByNumber(number);
     }
 

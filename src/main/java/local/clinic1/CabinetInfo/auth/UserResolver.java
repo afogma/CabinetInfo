@@ -1,8 +1,6 @@
 package local.clinic1.CabinetInfo.auth;
 
-import local.clinic1.CabinetInfo.auth.LoginService;
-import local.clinic1.CabinetInfo.auth.SystemUser;
-import local.clinic1.CabinetInfo.exceptions.UserNotFoundException;
+import local.clinic1.CabinetInfo.exceptions.AuthenticationFailedException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.MethodParameter;
 import org.springframework.stereotype.Component;
@@ -30,7 +28,7 @@ public class UserResolver implements HandlerMethodArgumentResolver {
         var session = request.getHeader("session");
         var token = request.getHeader("token");
         var user = loginService.getUser(session, token);
-        if (user == null) throw new  UserNotFoundException();
+        if (user == null) throw new AuthenticationFailedException();
         return user;
     }
 }

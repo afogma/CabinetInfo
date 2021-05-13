@@ -21,6 +21,10 @@ public class SystemUser {
     @Column(name = "user_role")
     private UserRole userRole;
 
+    public boolean isAdmin() {
+        return userRole.equals(UserRole.ADMIN);
+    }
+
     public enum UserRole {
         ADMIN,
         USER

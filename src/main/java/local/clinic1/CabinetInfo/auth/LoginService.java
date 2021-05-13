@@ -1,7 +1,6 @@
 package local.clinic1.CabinetInfo.auth;
 
 import local.clinic1.CabinetInfo.exceptions.AuthenticationFailedException;
-import local.clinic1.CabinetInfo.exceptions.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -27,6 +26,7 @@ public class LoginService {
 
     public UserSession login(Login login) {
         SystemUser user = systemUserRepo.findByName(login.getUser());
+
         if (user == null) throw new AuthenticationFailedException();;
 
         if (!bCryptPasswordEncoder.matches(login.getPassword(), user.getPassword())) throw new AuthenticationFailedException();;

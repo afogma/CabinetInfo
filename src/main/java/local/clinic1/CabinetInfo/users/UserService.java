@@ -2,11 +2,13 @@ package local.clinic1.CabinetInfo.users;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import local.clinic1.CabinetInfo.exceptions.*;
+import local.clinic1.CabinetInfo.exceptions.URLNotValidException;
+import local.clinic1.CabinetInfo.exceptions.UserAlreadyExistException;
+import local.clinic1.CabinetInfo.exceptions.UserNotFoundException;
+import local.clinic1.CabinetInfo.exceptions.UsersNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
@@ -31,9 +33,6 @@ public class UserService {
 
 
     public User addNewUser(User user) throws UserAlreadyExistException {
-        if (userRepo.existsById(user.getId())) {
-            throw new UserAlreadyExistException();
-        }
         User usr = userRepo.save(user);
         logger.info("{} added", usr);
         return usr;
