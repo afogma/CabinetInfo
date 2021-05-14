@@ -77,7 +77,7 @@ public class LoginService {
     }
 
     public void logout(Login login) {
-        if (login == null) throw new AuthenticationFailedException();
+        if (login == null) throw new UserNotFoundException();
         UserSession session = new UserSession(login.getUser());
         String sessionId = session.getSessionId();
         if (sessions.containsKey(sessionId)) {
