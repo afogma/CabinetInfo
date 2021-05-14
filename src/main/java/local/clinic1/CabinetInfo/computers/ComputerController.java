@@ -1,7 +1,9 @@
 package local.clinic1.CabinetInfo.computers;
 
+import local.clinic1.CabinetInfo.auth.SystemUser;
 import local.clinic1.CabinetInfo.exceptions.ComputerAlreadyExistException;
 import local.clinic1.CabinetInfo.exceptions.ComputerNotFoundException;
+import local.clinic1.CabinetInfo.exceptions.PermissionDeniedException;
 import local.clinic1.CabinetInfo.exceptions.URLNotValidException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -23,19 +25,22 @@ public class ComputerController {
     }
 
     @PostMapping
-    public ResponseEntity registration(@RequestBody Computer pc) throws ComputerAlreadyExistException {
+    public ResponseEntity registration(@RequestBody Computer pc, SystemUser user) throws ComputerAlreadyExistException {
+        if (!user.isAdmin()) throw new PermissionDeniedException();
         computerService.addNewPC(pc);
         return ResponseEntity.ok("Computer was added");
     }
 
     @PutMapping("/{name}")
-    public ResponseEntity updateComputer(@PathVariable String name, @RequestBody Computer pc) {
+    public ResponseEntity updateComputer(@PathVariable String name, @RequestBody Computer pc, SystemUser user) {
+        if (!user.isAdmin()) throw new PermissionDeniedException();
         computerService.updatePCByName(name, pc);
         return ResponseEntity.ok("Computer info updated");
     }
 
     @DeleteMapping("/del")
-    public ResponseEntity deleteComputer(@RequestParam String name) throws ComputerNotFoundException {
+    public ResponseEntity deleteComputer(@RequestParam String name, SystemUser user) throws ComputerNotFoundException {
+        if (!user.isAdmin()) throw new PermissionDeniedException();
         computerService.deletePCByName(name);
         return ResponseEntity.ok("Computer removed");
     }
@@ -50,23 +55,14 @@ public class ComputerController {
         return computerService.findAllByCabinet(cabinet);
     }
 
-//    @GetMapping("/ram")
-//    public List<Computer> showAllByRam(@RequestParam String ram) {
-//        return computerService.findAllByRam(ram);
-//    }
-//
-//    @GetMapping("/proc")
-//    public List<Computer> showAllByProcessor(@RequestParam String processor) {
-//        return computerService.findAllByProcessor(processor);
-//    }
-
     @GetMapping("/filter")
     public List<Computer> showAllCabinetsByFloorOrDepartment(@RequestParam(required = false) String ram, @RequestParam(required = false) String processor) throws ComputerNotFoundException {
         return computerService.findComputersByRamOrProcessor(ram, processor);
     }
 
     @GetMapping("/json")
-    public ResponseEntity addDataFromJson() throws URLNotValidException {
+    public ResponseEntity addDataFromJson(SystemUser user) throws URLNotValidException {
+        if (!user.isAdmin()) throw new PermissionDeniedException();
         computerService.loadFromJson();
         return ResponseEntity.ok("JSON data loaded");
     }

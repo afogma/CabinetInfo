@@ -1,7 +1,10 @@
 package local.clinic1.CabinetInfo.users;
 
 import local.clinic1.CabinetInfo.auth.SystemUser;
-import local.clinic1.CabinetInfo.exceptions.*;
+import local.clinic1.CabinetInfo.exceptions.PermissionDeniedException;
+import local.clinic1.CabinetInfo.exceptions.URLNotValidException;
+import local.clinic1.CabinetInfo.exceptions.UserNotFoundException;
+import local.clinic1.CabinetInfo.exceptions.UsersNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,32 +20,33 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping
-    public List<User> showAllUsers(SystemUser user) {
-        if (!user.isAdmin()) {
-            throw new PermissionDeniedException();
-        }
+    public List<User> showAllUsers(SystemUser systemUser) {
+        if (!systemUser.isAdmin()) throw new PermissionDeniedException();
         return userService.findAll();
     }
 
     @PostMapping
-    public ResponseEntity registration(@RequestBody User user) {
+    public ResponseEntity registration(@RequestBody User user, SystemUser systemUser) {
+        if (!systemUser.isAdmin()) throw new PermissionDeniedException();
         userService.addNewUser(user);
         return ResponseEntity.ok("User was added");
     }
 
-    @GetMapping ("/{id}")
+    @GetMapping("/{id}")
     public User showUserById(@PathVariable Long id) {
         return userService.findById(id);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity updateUser(@PathVariable Long id, @RequestBody User user) {
+    public ResponseEntity updateUser(@PathVariable Long id, @RequestBody User user, SystemUser systemUser) {
+        if (!systemUser.isAdmin()) throw new PermissionDeniedException();
         userService.updateById(id, user);
         return ResponseEntity.ok("User info updated");
     }
 
     @DeleteMapping("/del")
-    public ResponseEntity deleteUser(@PathVariable Long id) throws UserNotFoundException {
+    public ResponseEntity deleteUser(@PathVariable Long id, SystemUser systemUser) throws UserNotFoundException {
+        if (!systemUser.isAdmin()) throw new PermissionDeniedException();
         userService.deleteUser(id);
         return ResponseEntity.ok("User removed");
     }
@@ -68,7 +72,8 @@ public class UserController {
     }
 
     @GetMapping("/json")
-    public ResponseEntity addDataFromJson() throws URLNotValidException {
+    public ResponseEntity addDataFromJson(SystemUser systemUser) throws URLNotValidException {
+        if (!systemUser.isAdmin()) throw new PermissionDeniedException();
         userService.loadFromJson();
         return ResponseEntity.ok("JSON data loaded");
     }

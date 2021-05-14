@@ -17,10 +17,7 @@ public class PrinterController {
     private final PrinterService printerService;
 
     @GetMapping
-    public List<Printer> showAllPrinters(SystemUser user) {
-        if (!user.isAdmin()) {
-            throw new PermissionDeniedException();
-        }
+    public List<Printer> showAllPrinters() {
         return printerService.findAll();
     }
 
@@ -30,7 +27,8 @@ public class PrinterController {
     }
 
     @PostMapping
-    public ResponseEntity registration(@RequestBody Printer printer) {
+    public ResponseEntity registration(@RequestBody Printer printer, SystemUser user) {
+        if (!user.isAdmin()) throw new PermissionDeniedException();
         printerService.addNewPrinter(printer);
         return ResponseEntity.ok("Printer was added");
     }
@@ -46,7 +44,8 @@ public class PrinterController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity updatePrinter(@PathVariable Long id, @RequestBody Printer printer) {
+    public ResponseEntity updatePrinter(@PathVariable Long id, @RequestBody Printer printer, SystemUser user) {
+        if (!user.isAdmin()) throw new PermissionDeniedException();
         printerService.updateById(id, printer);
         return ResponseEntity.ok("Printer info updated");
     }
@@ -59,7 +58,8 @@ public class PrinterController {
     }
 
     @GetMapping("/json")
-    public ResponseEntity addDataFromJson() {
+    public ResponseEntity addDataFromJson(SystemUser user) {
+        if (!user.isAdmin()) throw new PermissionDeniedException();
         printerService.loadFromJson();
         return ResponseEntity.ok("JSON data loaded");
     }

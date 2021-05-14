@@ -35,6 +35,9 @@ public class LoginService {
             throw new AuthenticationFailedException();
         ;
 
+        System.out.println("login password: " + login.getPassword());
+        System.out.println("user password: " + user.getPassword());
+
         UserSession session = new UserSession(login.getUser());
         sessions.put(session.getSessionId(), session);
         return session;

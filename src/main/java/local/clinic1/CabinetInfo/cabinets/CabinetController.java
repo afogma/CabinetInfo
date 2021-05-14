@@ -1,7 +1,7 @@
 package local.clinic1.CabinetInfo.cabinets;
 
 import local.clinic1.CabinetInfo.auth.SystemUser;
-import local.clinic1.CabinetInfo.exceptions.AuthenticationFailedException;
+import local.clinic1.CabinetInfo.exceptions.PermissionDeniedException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,10 +18,7 @@ public class CabinetController {
 
     @GetMapping
     public List<Cabinet> showCabinetList() {
-//    public List<Cabinet> showCabinetList(SystemUser user) {
-//        if (user.isAdmin()) {
-//            throw new AuthenticationFailedException();
-//        }
+
         return cabinetService.findAll();
     }
 
@@ -36,24 +33,28 @@ public class CabinetController {
     }
 
     @PostMapping
-    public ResponseEntity registration(@RequestBody Cabinet cab) {
+    public ResponseEntity registration(@RequestBody Cabinet cab, SystemUser user) {
+        if (!user.isAdmin()) throw new PermissionDeniedException();
         cabinetService.addNewCabinet(cab);
         return ResponseEntity.ok("Cabinet successfully added");
     }
 
     @DeleteMapping("/del")
-    public ResponseEntity deleteCabinet(@RequestParam int number) {
+    public ResponseEntity deleteCabinet(@RequestParam int number, SystemUser user) {
+        if (!user.isAdmin()) throw new PermissionDeniedException();
         cabinetService.deleteByNumber(number);
         return ResponseEntity.ok("Cabinet deleted");
     }
 
     @PutMapping("/{number}")
-    public ResponseEntity<Cabinet> updateCabinet(@PathVariable int number, @RequestBody Cabinet cabinet) {
+    public ResponseEntity<Cabinet> updateCabinet(@PathVariable int number, @RequestBody Cabinet cabinet, SystemUser user) {
+        if (!user.isAdmin()) throw new PermissionDeniedException();
         return ResponseEntity.ok(cabinetService.updateByNumber(number, cabinet));
     }
 
     @GetMapping("/json")
-    public ResponseEntity addDataFromJson() {
+    public ResponseEntity addDataFromJson(SystemUser user) {
+        if (!user.isAdmin()) throw new PermissionDeniedException();
         cabinetService.loadFromJson();
         return ResponseEntity.ok("JSON data loaded");
     }
