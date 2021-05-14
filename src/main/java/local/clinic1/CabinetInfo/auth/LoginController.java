@@ -21,17 +21,17 @@ public class LoginController {
     }
 
     @PostMapping("/registration")
-    public ResponseEntity.BodyBuilder registerUser(@RequestBody RegisterRequest request, SystemUser user) {
+    public ResponseEntity registerUser(@RequestBody RegisterRequest request, SystemUser user) {
         if (!user.isAdmin()) {
             throw new ForbiddenException();
         }
         loginService.register(request);
-        return ResponseEntity.status(HttpStatus.CREATED);
+        return ResponseEntity.ok("new user created");
     }
 
     @PostMapping("/logout")
-    public ResponseEntity.BodyBuilder UserLogout(SystemUser user) {
+    public ResponseEntity UserLogout(SystemUser user) {
         loginService.logout(user);
-        return ResponseEntity.status(HttpStatus.GONE);
+        return ResponseEntity.ok("logged out");
     }
 }

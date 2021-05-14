@@ -7,7 +7,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 
 
@@ -67,13 +66,15 @@ public class LoginService {
         return encryptedPassword;
     }
 
-    public void register(RegisterRequest request) {
+    public SystemUser register(RegisterRequest request) {
         if (request == null) throw new UserNotFoundException();
         SystemUser user = new SystemUser();
+        user.setName(request.getUser());
         user.setName(request.getUser());
         user.setPassword(encryption(request.getPassword()));
         user.setUserRole(request.getUserRole());
         systemUserRepo.save(user);
+        return user;
     }
 
     public void logout(SystemUser user) {

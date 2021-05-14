@@ -52,7 +52,8 @@ public class PrinterController {
     }
 
     @DeleteMapping("/del")
-    public ResponseEntity deletePrinter(@RequestParam Long id) {
+    public ResponseEntity deletePrinter(@RequestParam Long id, SystemUser user) {
+        if (!user.isAdmin()) throw new PermissionDeniedException();
         printerService.deletePrinter(id);
         return ResponseEntity.ok("Printer removed");
     }
