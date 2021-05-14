@@ -14,6 +14,7 @@ import javax.persistence.*;
 public class SystemUser {
 
     @Id
+    @GeneratedValue
     private Long id;
     private String name;
     private String password;

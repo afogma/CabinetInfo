@@ -1,9 +1,9 @@
 package local.clinic1.CabinetInfo.auth;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
-@Getter
+
+@Data
 public class RegisterRequest {
 
     private String user;

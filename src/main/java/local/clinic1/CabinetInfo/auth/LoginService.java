@@ -67,14 +67,13 @@ public class LoginService {
         return encryptedPassword;
     }
 
-    public SystemUser register(RegisterRequest request) {
+    public void register(RegisterRequest request) {
         if (request == null) throw new UserNotFoundException();
         SystemUser user = new SystemUser();
         user.setName(request.getUser());
         user.setPassword(encryption(request.getPassword()));
         user.setUserRole(request.getUserRole());
         systemUserRepo.save(user);
-        return user;
     }
 
     public void logout(SystemUser user) {
