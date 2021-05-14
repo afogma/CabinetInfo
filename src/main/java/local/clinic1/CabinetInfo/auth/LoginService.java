@@ -18,7 +18,7 @@ public class LoginService {
     private final SystemUserRepo systemUserRepo;
 
     private final Map<String, UserSession> sessions = new HashMap<>();
-//    private final Map<String, SystemUser> users = new HashMap<>();
+    //    private final Map<String, SystemUser> users = new HashMap<>();
     private final BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
 //    {
@@ -30,8 +30,11 @@ public class LoginService {
 
     public UserSession login(Login login) {
         SystemUser user = systemUserRepo.findByName(login.getUser());
-        if (user == null) throw new AuthenticationFailedException();;
-        if (!bCryptPasswordEncoder.matches(login.getPassword(), user.getPassword())) throw new AuthenticationFailedException();;
+        if (user == null) throw new AuthenticationFailedException();
+        ;
+        if (!bCryptPasswordEncoder.matches(login.getPassword(), user.getPassword()))
+            throw new AuthenticationFailedException();
+        ;
 
         UserSession session = new UserSession(login.getUser());
         sessions.put(session.getSessionId(), session);
@@ -65,9 +68,7 @@ public class LoginService {
     }
 
     public SystemUser register(RegisterRequest request) {
-        if (request == null) {
-            throw new UserNotFoundException();
-        }
+        if (request == null) throw new UserNotFoundException();
         SystemUser user = new SystemUser();
         user.setName(request.getUser());
         user.setPassword(encryption(request.getPassword()));
@@ -79,9 +80,6 @@ public class LoginService {
     public void logout(SystemUser user) {
         if (user == null) throw new UserNotFoundException();
         UserSession session = new UserSession(user.getName());
-        String sessionId = session.getSessionId();
-        if (sessions.containsKey(sessionId)) {
-            sessions.remove(session.getSessionId(), session);
-        }
+        sessions.remove(session.getSessionId());
     }
 }
