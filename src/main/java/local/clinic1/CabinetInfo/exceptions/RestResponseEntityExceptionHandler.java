@@ -40,6 +40,8 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
             return new ResponseEntity<>("Authentication failed", new HttpHeaders(), HttpStatus.UNAUTHORIZED);
         if (ex instanceof PermissionDeniedException)
             return new ResponseEntity<>("Permission denied", new HttpHeaders(), HttpStatus.PAYMENT_REQUIRED);
+        if (ex instanceof ForbiddenException)
+            return new ResponseEntity<>("Forbidden", new HttpHeaders(), HttpStatus.FORBIDDEN);
 
         return new ResponseEntity<String>("Other error", HttpStatus.I_AM_A_TEAPOT);
     }

@@ -1,5 +1,7 @@
 package local.clinic1.CabinetInfo.auth;
 
+import local.clinic1.CabinetInfo.exceptions.AuthenticationFailedException;
+import local.clinic1.CabinetInfo.exceptions.ForbiddenException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,14 +21,17 @@ public class LoginController {
     }
 
     @PostMapping("/registration")
-    public ResponseEntity.BodyBuilder registerUser(@RequestBody Login login, String role) {
-        loginService.register(login, role);
+    public ResponseEntity.BodyBuilder registerUser(@RequestBody RegisterRequest request, SystemUser user) {
+        if (!user.isAdmin()) {
+            throw new ForbiddenException();
+        }
+        loginService.register(request);
         return ResponseEntity.status(HttpStatus.CREATED);
     }
 
     @PostMapping("/logout")
-    public ResponseEntity.BodyBuilder UserLogout(@RequestBody Login login) {
-        loginService.logout(login);
+    public ResponseEntity.BodyBuilder UserLogout(SystemUser user) {
+        loginService.logout(user);
         return ResponseEntity.status(HttpStatus.GONE);
     }
 }

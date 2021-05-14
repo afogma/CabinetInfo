@@ -64,21 +64,21 @@ public class LoginService {
         return encryptedPassword;
     }
 
-    public SystemUser register(Login login, String role) {
-        if (login == null) {
+    public SystemUser register(RegisterRequest request) {
+        if (request == null) {
             throw new UserNotFoundException();
         }
         SystemUser user = new SystemUser();
-        user.setName(login.getUser());
-        user.setPassword(encryption(login.getPassword()));
-        user.setUserRole(SystemUser.UserRole.valueOf(role.toUpperCase(Locale.ROOT)));
+        user.setName(request.getUser());
+        user.setPassword(encryption(request.getPassword()));
+        user.setUserRole(request.getUserRole());
         systemUserRepo.save(user);
         return user;
     }
 
-    public void logout(Login login) {
-        if (login == null) throw new UserNotFoundException();
-        UserSession session = new UserSession(login.getUser());
+    public void logout(SystemUser user) {
+        if (user == null) throw new UserNotFoundException();
+        UserSession session = new UserSession(user.getName());
         String sessionId = session.getSessionId();
         if (sessions.containsKey(sessionId)) {
             sessions.remove(session.getSessionId(), session);
