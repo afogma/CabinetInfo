@@ -1,5 +1,7 @@
 package local.clinic1.CabinetInfo.printers;
 
+import local.clinic1.CabinetInfo.auth.SystemUser;
+import local.clinic1.CabinetInfo.exceptions.PermissionDeniedException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +17,10 @@ public class PrinterController {
     private final PrinterService printerService;
 
     @GetMapping
-    public List<Printer> showAllPrinters() {
+    public List<Printer> showAllPrinters(SystemUser user) {
+        if (!user.isAdmin()) {
+            throw new PermissionDeniedException();
+        }
         return printerService.findAll();
     }
 

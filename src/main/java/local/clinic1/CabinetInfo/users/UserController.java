@@ -1,5 +1,6 @@
 package local.clinic1.CabinetInfo.users;
 
+import local.clinic1.CabinetInfo.auth.SystemUser;
 import local.clinic1.CabinetInfo.exceptions.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +17,10 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping
-    public List<User> showAllPrinters() {
+    public List<User> showAllUsers(SystemUser user) {
+        if (!user.isAdmin()) {
+            throw new PermissionDeniedException();
+        }
         return userService.findAll();
     }
 

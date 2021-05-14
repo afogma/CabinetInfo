@@ -17,11 +17,11 @@ public class CabinetController {
     private final CabinetService cabinetService;
 
     @GetMapping
-    public List<Cabinet> showCabinetList(SystemUser user) {
-//    public List<Cabinet> showCabinetList() {
-        if (!user.isAdmin()) {
-            throw new AuthenticationFailedException();
-        }
+    public List<Cabinet> showCabinetList() {
+//    public List<Cabinet> showCabinetList(SystemUser user) {
+//        if (user.isAdmin()) {
+//            throw new AuthenticationFailedException();
+//        }
         return cabinetService.findAll();
     }
 
