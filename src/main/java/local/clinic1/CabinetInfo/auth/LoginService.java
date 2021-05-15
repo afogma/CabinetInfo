@@ -28,7 +28,7 @@ public class LoginService {
 //    }
 
     public UserSession login(Login login) {
-        SystemUser user = systemUserRepo.findByName(login.getUser());
+        var user = systemUserRepo.findByName(login.getUser());
         if (user == null) throw new AuthenticationFailedException();
         ;
         if (!bCryptPasswordEncoder.matches(login.getPassword(), user.getPassword()))
@@ -38,13 +38,13 @@ public class LoginService {
         System.out.println("login password: " + login.getPassword());
         System.out.println("user password: " + user.getPassword());
 
-        UserSession session = new UserSession(login.getUser());
+        var session = new UserSession(login.getUser());
         sessions.put(session.getSessionId(), session);
         return session;
     }
 
     public UserSession getSession(String session, String token) {
-        UserSession s = sessions.get(session);
+        var s = sessions.get(session);
         if (s == null) {
             throw new AuthenticationFailedException();
         }
@@ -55,23 +55,23 @@ public class LoginService {
     }
 
     public SystemUser getUser(String session, String token) {
-        UserSession s = getSession(session, token);
+        var s = getSession(session, token);
         if (s == null) {
             throw new AuthenticationFailedException();
         }
-        String userName = s.getUserName();
-        SystemUser user = systemUserRepo.findByName(userName);
+        var userName = s.getUserName();
+        var user = systemUserRepo.findByName(userName);
         return user;
     }
 
     private String encryption(String password) {
-        String encryptedPassword = bCryptPasswordEncoder.encode(password);
+        var encryptedPassword = bCryptPasswordEncoder.encode(password);
         return encryptedPassword;
     }
 
     public SystemUser register(RegisterRequest request) {
         if (request == null) throw new UserNotFoundException();
-        SystemUser user = new SystemUser();
+        var user = new SystemUser();
         user.setName(request.getUser());
         user.setName(request.getUser());
         user.setPassword(encryption(request.getPassword()));
@@ -82,7 +82,7 @@ public class LoginService {
 
     public void logout(SystemUser user) {
         if (user == null) throw new UserNotFoundException();
-        UserSession session = new UserSession(user.getName());
+        var session = new UserSession(user.getName());
         sessions.remove(session.getSessionId());
     }
 }

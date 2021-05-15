@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 import java.util.Comparator;
 import java.util.List;
 
@@ -33,13 +32,13 @@ public class UserService {
 
 
     public User addNewUser(User user) throws UserAlreadyExistException {
-        User usr = userRepo.save(user);
+        var usr = userRepo.save(user);
         logger.info("{} added", usr);
         return usr;
     }
 
     public User findByName(String name) throws UserNotFoundException {
-        User user = userRepo.findByName(name);
+        var user = userRepo.findByName(name);
         if (user == null) {
             throw new UserNotFoundException();
         }
@@ -47,7 +46,7 @@ public class UserService {
     }
 
     public User findById(Long id) throws UserNotFoundException {
-        User user = userRepo.findUserById(id);
+        var user = userRepo.findUserById(id);
         if (user == null) {
             throw new UserNotFoundException();
         }
@@ -87,7 +86,7 @@ public class UserService {
     }
 
     public User updateById(Long id, User user) {
-        User newUser = userRepo.findUserById(id);
+        var newUser = userRepo.findUserById(id);
         newUser.setName(user.getName());
         newUser.setPosition(user.getPosition());
         newUser.setCabinet(user.getCabinet());
@@ -99,7 +98,7 @@ public class UserService {
     }
 
     public void deleteUser(Long id) throws UserNotFoundException {
-        User user = userRepo.findUserById(id);
+        var user = userRepo.findUserById(id);
         if (user == null) {
             throw new UserNotFoundException();
         }
@@ -108,10 +107,10 @@ public class UserService {
     }
 
         public void loadFromJson() throws URLNotValidException {
-        URL url = this.getClass().getClassLoader().getResource("user_data.json");
+        var url = this.getClass().getClassLoader().getResource("user_data.json");
         if (url != null) {
             File jsonFile = new File(url.getFile());
-            ObjectMapper objectMapper = new ObjectMapper();
+            var objectMapper = new ObjectMapper();
             try {
                 List<User> users = objectMapper.readValue(jsonFile, new TypeReference<>() {
                 });

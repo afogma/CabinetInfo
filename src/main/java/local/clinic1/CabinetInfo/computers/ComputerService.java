@@ -9,12 +9,10 @@ import local.clinic1.CabinetInfo.exceptions.WrongInputException;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -28,7 +26,7 @@ public class ComputerService {
     private final ComputerRepo computerRepo;
 
     public Computer findPCByName(String name) throws ComputerNotFoundException {
-        Computer pc = computerRepo.findByName(name);
+        var pc = computerRepo.findByName(name);
         if (pc == null) {
             throw new ComputerNotFoundException();
         }
@@ -39,17 +37,17 @@ public class ComputerService {
         if (computerRepo.findByName(pc.getName()) != null) {
             throw new ComputerAlreadyExistException();
         }
-        Computer computer = computerRepo.save(pc);
+        var computer = computerRepo.save(pc);
         logger.info("{} added", computer);
         return computer;
     }
 
     public Computer updatePCByName(String name, Computer pc) {
-        Computer computer = computerRepo.findByName(name);
+        var computer = computerRepo.findByName(name);
         if (computer.equals(pc)) {
             throw new WrongInputException();
         }
-        Computer comp = computerRepo.findByName(name);
+        var comp = computerRepo.findByName(name);
         comp.setRam(pc.getRam());
         comp.setProcessor(pc.getProcessor());
         comp.setIpAddress(pc.getIpAddress());
@@ -62,7 +60,7 @@ public class ComputerService {
     }
 
     public void deletePCByName(String name) throws ComputerNotFoundException {
-        Computer pc = computerRepo.findByName(name);
+        var pc = computerRepo.findByName(name);
         if (pc == null) {
             throw new ComputerNotFoundException();
         }
@@ -94,10 +92,10 @@ public class ComputerService {
     }
 
     public void loadFromJson() throws URLNotValidException {
-        URL url = this.getClass().getClassLoader().getResource("computer_data.json");
+        var url = this.getClass().getClassLoader().getResource("computer_data.json");
         if (url != null) {
             File jsonFile = new File(url.getFile());
-            ObjectMapper objectMapper = new ObjectMapper();
+            var objectMapper = new ObjectMapper();
             try {
                 List<Computer> computers = objectMapper.readValue(jsonFile, new TypeReference<>() {
                 });

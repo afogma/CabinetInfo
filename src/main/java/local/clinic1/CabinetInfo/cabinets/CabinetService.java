@@ -2,19 +2,17 @@ package local.clinic1.CabinetInfo.cabinets;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import local.clinic1.CabinetInfo.exceptions.CabinetNotFoundException;
 import local.clinic1.CabinetInfo.exceptions.CabinetAlreadyExistException;
+import local.clinic1.CabinetInfo.exceptions.CabinetNotFoundException;
 import local.clinic1.CabinetInfo.exceptions.URLNotValidException;
 import local.clinic1.CabinetInfo.exceptions.WrongInputException;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -28,7 +26,7 @@ public class CabinetService {
     private final CabinetRepo cabinetRepo;
 
     public Cabinet findByNumber(int number) {
-        Cabinet cab = cabinetRepo.findByNumber(number);
+        var cab = cabinetRepo.findByNumber(number);
         if (cab == null) {
             throw new CabinetNotFoundException();
         }
@@ -42,7 +40,7 @@ public class CabinetService {
         if (cabinet.getNumber() == 0 ) {
             throw new WrongInputException();
         }
-        Cabinet cab = cabinetRepo.save(cabinet);
+        var cab = cabinetRepo.save(cabinet);
         logger.info("{} added", cab);
         return cab;
     }
@@ -54,7 +52,7 @@ public class CabinetService {
         if (number != cabinet.getNumber()) {
             throw new WrongInputException();
         }
-        Cabinet cab = cabinet;
+        var cab = cabinet;
         cab.setFloor(cabinet.getFloor());
         cab.setDepartment(cabinet.getDepartment());
         cabinetRepo.save(cab);
@@ -63,7 +61,7 @@ public class CabinetService {
     }
 
     public void deleteByNumber(int number) {
-        Cabinet cab = cabinetRepo.findByNumber(number);
+        var cab = cabinetRepo.findByNumber(number);
         if (cab == null) {
             throw new CabinetNotFoundException();
         }
@@ -72,7 +70,7 @@ public class CabinetService {
     }
 
     public List<Cabinet> findAll() {
-        List<Cabinet> listOfCabinets = (List<Cabinet>) cabinetRepo.findAll();
+        List<Cabinet> listOfCabinets = cabinetRepo.findAll();
         listOfCabinets.sort(Comparator.comparingInt(Cabinet::getNumber));
         return listOfCabinets;
     }
@@ -89,10 +87,10 @@ public class CabinetService {
     }
 
     public void loadFromJson() throws URLNotValidException {
-        URL url = this.getClass().getClassLoader().getResource("cabinet_data.json");
+        var url = this.getClass().getClassLoader().getResource("cabinet_data.json");
         if (url != null) {
-            File jsonFile = new File(url.getFile());
-            ObjectMapper objectMapper = new ObjectMapper();
+            var jsonFile = new File(url.getFile());
+            var objectMapper = new ObjectMapper();
             try {
                 List<Cabinet> cabinets = objectMapper.readValue(jsonFile, new TypeReference<>() {
                 });

@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 import java.util.Comparator;
 import java.util.List;
 
@@ -30,13 +29,13 @@ public class PrinterService {
     }
 
     public Printer addNewPrinter(Printer printer) {
-        Printer print = printerRepo.save(printer);
+        var print = printerRepo.save(printer);
         logger.info("{} added", print);
         return print;
     }
 
     public Printer findPrinterById(Long id) {
-        Printer printer = printerRepo.findPrinterById(id);
+        var printer = printerRepo.findPrinterById(id);
         if (printer == null) {
             throw new PrinterNotFoundException();
         }
@@ -60,8 +59,7 @@ public class PrinterService {
     }
 
     public Printer updateById(Long id, Printer printer) {
-        logger.info("updating info for {}", printer);
-        Printer newPrinter = printerRepo.findPrinterById(id);
+        var newPrinter = printerRepo.findPrinterById(id);
         newPrinter.setName(printer.getName());
         newPrinter.setCartridge(printer.getCartridge());
         newPrinter.setCabinet(printer.getCabinet());
@@ -73,7 +71,7 @@ public class PrinterService {
     }
 
     public void deletePrinter(Long id) {
-        Printer printer = printerRepo.findPrinterById(id);
+        var printer = printerRepo.findPrinterById(id);
         if (printer == null) {
             throw new PrinterNotFoundException();
         }
@@ -82,10 +80,10 @@ public class PrinterService {
     }
 
     public void loadFromJson() throws URLNotValidException {
-        URL url = this.getClass().getClassLoader().getResource("printer_data.json");
+        var url = this.getClass().getClassLoader().getResource("printer_data.json");
         if (url != null) {
             File jsonFile = new File(url.getFile());
-            ObjectMapper objectMapper = new ObjectMapper();
+            var objectMapper = new ObjectMapper();
             try {
                 List<Printer> printers = objectMapper.readValue(jsonFile, new TypeReference<>() {
                 });
