@@ -39,17 +39,17 @@ public class CabinetController {
         return ResponseEntity.ok("Cabinet successfully added");
     }
 
+    @PutMapping("/{number}")
+    public ResponseEntity<Cabinet> updateCabinet(@PathVariable int number, @RequestBody Cabinet cabinet, SystemUser user) {
+        if (!user.isAdmin()) throw new PermissionDeniedException();
+        return ResponseEntity.ok(cabinetService.updateByNumber(number, cabinet));
+    }
+
     @DeleteMapping("/del")
     public ResponseEntity deleteCabinet(@RequestParam int number, SystemUser user) {
         if (!user.isAdmin()) throw new PermissionDeniedException();
         cabinetService.deleteByNumber(number);
         return ResponseEntity.ok("Cabinet deleted");
-    }
-
-    @PutMapping("/{number}")
-    public ResponseEntity<Cabinet> updateCabinet(@PathVariable int number, @RequestBody Cabinet cabinet, SystemUser user) {
-        if (!user.isAdmin()) throw new PermissionDeniedException();
-        return ResponseEntity.ok(cabinetService.updateByNumber(number, cabinet));
     }
 
     @GetMapping("/json")

@@ -43,7 +43,7 @@ public class LoginService {
         return session;
     }
 
-    public UserSession getSession(String session, String token) {
+    public UserSession getSession(String session, String token, String ip) {
         var s = sessions.get(session);
         if (s == null) {
             throw new AuthenticationFailedException();
@@ -54,8 +54,8 @@ public class LoginService {
         return s;
     }
 
-    public SystemUser getUser(String session, String token) {
-        var s = getSession(session, token);
+    public SystemUser getUser(String session, String token, String ip) {
+        var s = getSession(session, token, ip);
         if (s == null) {
             throw new AuthenticationFailedException();
         }

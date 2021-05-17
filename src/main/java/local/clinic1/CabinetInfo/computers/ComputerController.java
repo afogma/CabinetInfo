@@ -24,6 +24,21 @@ public class ComputerController {
         return computerService.findAll();
     }
 
+    @GetMapping("/pc")
+    public Computer showComputerByName(@RequestParam String name) throws ComputerNotFoundException {
+        return computerService.findPCByName(name);
+    }
+
+    @GetMapping("/cabinet")
+    public List<Computer> showAllByCabinet(@RequestParam int cabinet) {
+        return computerService.findAllByCabinet(cabinet);
+    }
+
+    @GetMapping("/filter")
+    public List<Computer> showAllCabinetsByFloorOrDepartment(@RequestParam(required = false) String ram, @RequestParam(required = false) String processor) throws ComputerNotFoundException {
+        return computerService.findComputersByRamOrProcessor(ram, processor);
+    }
+
     @PostMapping
     public ResponseEntity registration(@RequestBody Computer pc, SystemUser user) throws ComputerAlreadyExistException {
         if (!user.isAdmin()) throw new PermissionDeniedException();
@@ -43,21 +58,6 @@ public class ComputerController {
         if (!user.isAdmin()) throw new PermissionDeniedException();
         computerService.deletePCByName(name);
         return ResponseEntity.ok("Computer removed");
-    }
-
-    @GetMapping("/pc")
-    public Computer showComputerByName(@RequestParam String name) throws ComputerNotFoundException {
-        return computerService.findPCByName(name);
-    }
-
-    @GetMapping("/cab")
-    public List<Computer> showAllByCabinet(@RequestParam int cabinet) {
-        return computerService.findAllByCabinet(cabinet);
-    }
-
-    @GetMapping("/filter")
-    public List<Computer> showAllCabinetsByFloorOrDepartment(@RequestParam(required = false) String ram, @RequestParam(required = false) String processor) throws ComputerNotFoundException {
-        return computerService.findComputersByRamOrProcessor(ram, processor);
     }
 
     @GetMapping("/json")

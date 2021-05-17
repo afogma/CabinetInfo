@@ -25,16 +25,36 @@ public class UserController {
         return userService.findAll();
     }
 
+    @GetMapping("/{id}")
+    public User showUserById(@PathVariable Long id) {
+        return userService.findById(id);
+    }
+
+    @PostMapping("/department")
+    public List<User> showAllByDepartment(@RequestParam String department) throws UsersNotFoundException {
+        return userService.findAllByDepartment(department);
+    }
+
+    @PostMapping("/cabinet")
+    public List<User> showAllByCabinet(@RequestParam int cabinet) throws UsersNotFoundException {
+        return userService.findAllByCabinet(cabinet);
+    }
+
+    @PostMapping("/computer")
+    public List<User> showAllByPCName(@RequestParam String pcName) throws UsersNotFoundException {
+        return userService.findAllByPCName(pcName);
+    }
+
+    @PostMapping("/position")
+    public List<User> showAllByPosition(@RequestParam String position) throws UsersNotFoundException {
+        return userService.findAllByPosition(position);
+    }
+
     @PostMapping
     public ResponseEntity registration(@RequestBody User user, SystemUser systemUser) {
         if (!systemUser.isAdmin()) throw new PermissionDeniedException();
         userService.addNewUser(user);
         return ResponseEntity.ok("User was added");
-    }
-
-    @GetMapping("/{id}")
-    public User showUserById(@PathVariable Long id) {
-        return userService.findById(id);
     }
 
     @PutMapping("/{id}")
@@ -44,31 +64,11 @@ public class UserController {
         return ResponseEntity.ok("User info updated");
     }
 
-    @DeleteMapping("/del")
+    @DeleteMapping
     public ResponseEntity deleteUser(@PathVariable Long id, SystemUser systemUser) throws UserNotFoundException {
         if (!systemUser.isAdmin()) throw new PermissionDeniedException();
         userService.deleteUser(id);
         return ResponseEntity.ok("User removed");
-    }
-
-    @PostMapping("/dep")
-    public List<User> showAllByDepartment(@RequestParam String department) throws UsersNotFoundException {
-        return userService.findAllByDepartment(department);
-    }
-
-    @PostMapping("/cab")
-    public List<User> showAllByCabinet(@RequestParam int cabinet) throws UsersNotFoundException {
-        return userService.findAllByCabinet(cabinet);
-    }
-
-    @PostMapping("/pc")
-    public List<User> showAllByPCName(@RequestParam String pcName) throws UsersNotFoundException {
-        return userService.findAllByPCName(pcName);
-    }
-
-    @PostMapping("/pos")
-    public List<User> showAllByPosition(@RequestParam String position) throws UsersNotFoundException {
-        return userService.findAllByPosition(position);
     }
 
     @GetMapping("/json")

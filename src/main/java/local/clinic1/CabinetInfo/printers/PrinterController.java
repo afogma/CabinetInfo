@@ -26,13 +26,6 @@ public class PrinterController {
         return printerService.findPrinterById(id);
     }
 
-    @PostMapping
-    public ResponseEntity registration(@RequestBody Printer printer, SystemUser user) {
-        if (!user.isAdmin()) throw new PermissionDeniedException();
-        printerService.addNewPrinter(printer);
-        return ResponseEntity.ok("Printer was added");
-    }
-
     @PostMapping("/{name}")
     public List<Printer> showAllByName(@PathVariable String name) {
         return printerService.findAllByName(name);
@@ -41,6 +34,13 @@ public class PrinterController {
     @PostMapping("/filter")
     public List<Printer> showAllByCabinet(@RequestParam int cabinet){
         return printerService.findAllByCabinet(cabinet);
+    }
+
+    @PostMapping
+    public ResponseEntity registration(@RequestBody Printer printer, SystemUser user) {
+        if (!user.isAdmin()) throw new PermissionDeniedException();
+        printerService.addNewPrinter(printer);
+        return ResponseEntity.ok("Printer was added");
     }
 
     @PutMapping("/{id}")

@@ -2,7 +2,6 @@ package local.clinic1.CabinetInfo.auth;
 
 import lombok.Data;
 
-
 @Data
 public class RegisterRequest {
 
