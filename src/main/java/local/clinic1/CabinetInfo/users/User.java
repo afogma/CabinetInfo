@@ -3,7 +3,6 @@ package local.clinic1.CabinetInfo.users;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.Objects;
 
 @Data
 @Entity
