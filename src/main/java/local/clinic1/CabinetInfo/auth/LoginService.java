@@ -24,13 +24,6 @@ public class LoginService {
     private final Map<String, UserSession> sessions = new HashMap<>();
     private final BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
-//    {
-//        SystemUser user = new SystemUser("admin",encryption("4dm1n2"), ADMIN);
-//        // pass hash: $2a$10$JvNX9sgVBnSJXyRuEpNtXuBLok1cIZ0fDtxNZxHftEcgStF/f7x6e
-//        userpass: $2a$10$CQDdUmJXO.qc8zLw4zx9LeHMJcOsGhx3dY5R5DZ4neFDemTGopd6i
-//        users.put("admin", user);
-//    }
-
     public UserSession login(Login login, String ipAddress) {
         var user = systemUserRepo.findByName(login.getUser());
         if (user == null) throw new AuthenticationFailedException();
