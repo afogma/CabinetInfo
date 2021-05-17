@@ -1,9 +1,11 @@
 package local.clinic1.CabinetInfo.auth;
 
-import local.clinic1.CabinetInfo.exceptions.ForbiddenException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -20,11 +22,9 @@ public class LoginController {
     }
 
     @PostMapping("/registration")
-    public ResponseEntity registerUser(@RequestBody RegisterRequest request, SystemUser user) {
-        if (!user.isAdmin()) {
-            throw new ForbiddenException();
-        }
-        loginService.register(request);
+    @Authorized
+    public ResponseEntity registerUser(@RequestBody Login login) {
+        loginService.register(login);
         return ResponseEntity.ok("new user created");
     }
 

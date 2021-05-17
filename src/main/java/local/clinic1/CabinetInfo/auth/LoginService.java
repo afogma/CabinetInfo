@@ -57,12 +57,11 @@ public class LoginService {
         return encryptedPassword;
     }
 
-    public SystemUser register(RegisterRequest request) {
-        if (request == null) throw new UserNotFoundException();
+    public SystemUser register(Login login) {
+        if (login == null) throw new UserNotFoundException();
         var user = new SystemUser();
-        user.setName(request.getUser());
-        user.setPassword(encryption(request.getPassword()));
-        user.setUserRole(request.getUserRole());
+        user.setName(login.getUser());
+        user.setPassword(encryption(login.getPassword()));
         systemUserRepo.save(user);
         logger.info("{} registered", user);
         return user;

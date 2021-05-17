@@ -1,7 +1,7 @@
 package local.clinic1.CabinetInfo.cabinets;
 
+import local.clinic1.CabinetInfo.auth.Authorized;
 import local.clinic1.CabinetInfo.auth.SystemUser;
-import local.clinic1.CabinetInfo.exceptions.PermissionDeniedException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -32,28 +32,28 @@ public class CabinetController {
     }
 
     @PostMapping
+    @Authorized
     public ResponseEntity registration(@RequestBody Cabinet cab, SystemUser user) {
-        if (!user.isAdmin()) throw new PermissionDeniedException();
         cabinetService.addNewCabinet(cab);
         return ResponseEntity.ok("Cabinet successfully added");
     }
 
     @PutMapping("/{number}")
+    @Authorized
     public ResponseEntity<Cabinet> updateCabinet(@PathVariable int number, @RequestBody Cabinet cabinet, SystemUser user) {
-        if (!user.isAdmin()) throw new PermissionDeniedException();
         return ResponseEntity.ok(cabinetService.updateByNumber(number, cabinet));
     }
 
     @DeleteMapping("/del")
+    @Authorized
     public ResponseEntity deleteCabinet(@RequestParam int number, SystemUser user) {
-        if (!user.isAdmin()) throw new PermissionDeniedException();
         cabinetService.deleteByNumber(number);
         return ResponseEntity.ok("Cabinet deleted");
     }
 
     @GetMapping("/json")
+    @Authorized
     public ResponseEntity addDataFromJson(SystemUser user) {
-        if (!user.isAdmin()) throw new PermissionDeniedException();
         cabinetService.loadFromJson();
         return ResponseEntity.ok("JSON data loaded");
     }

@@ -1,7 +1,9 @@
 package local.clinic1.CabinetInfo.users;
 
+import local.clinic1.CabinetInfo.auth.AuthorizationData;
+import local.clinic1.CabinetInfo.auth.Authorized;
 import local.clinic1.CabinetInfo.auth.SystemUser;
-import local.clinic1.CabinetInfo.exceptions.PermissionDeniedException;
+import local.clinic1.CabinetInfo.exceptions.AuthenticationFailedException;
 import local.clinic1.CabinetInfo.exceptions.URLNotValidException;
 import local.clinic1.CabinetInfo.exceptions.UserNotFoundException;
 import local.clinic1.CabinetInfo.exceptions.UsersNotFoundException;
@@ -20,8 +22,9 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping
-    public List<User> showAllUsers(SystemUser systemUser) {
-        if (!systemUser.isAdmin()) throw new PermissionDeniedException();
+    @Authorized
+    public List<User> showAllUsers(AuthorizationData data) {
+        if (data == null) throw new AuthenticationFailedException();
         return userService.findAll();
     }
 
@@ -51,29 +54,29 @@ public class UserController {
     }
 
     @PostMapping
+    @Authorized
     public ResponseEntity registration(@RequestBody User user, SystemUser systemUser) {
-        if (!systemUser.isAdmin()) throw new PermissionDeniedException();
         userService.addNewUser(user);
         return ResponseEntity.ok("User was added");
     }
 
     @PutMapping("/{id}")
+    @Authorized
     public ResponseEntity updateUser(@PathVariable Long id, @RequestBody User user, SystemUser systemUser) {
-        if (!systemUser.isAdmin()) throw new PermissionDeniedException();
         userService.updateById(id, user);
         return ResponseEntity.ok("User info updated");
     }
 
     @DeleteMapping
+    @Authorized
     public ResponseEntity deleteUser(@PathVariable Long id, SystemUser systemUser) throws UserNotFoundException {
-        if (!systemUser.isAdmin()) throw new PermissionDeniedException();
         userService.deleteUser(id);
         return ResponseEntity.ok("User removed");
     }
 
     @GetMapping("/json")
+    @Authorized
     public ResponseEntity addDataFromJson(SystemUser systemUser) throws URLNotValidException {
-        if (!systemUser.isAdmin()) throw new PermissionDeniedException();
         userService.loadFromJson();
         return ResponseEntity.ok("JSON data loaded");
     }

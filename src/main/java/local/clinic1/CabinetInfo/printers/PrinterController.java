@@ -1,7 +1,7 @@
 package local.clinic1.CabinetInfo.printers;
 
+import local.clinic1.CabinetInfo.auth.Authorized;
 import local.clinic1.CabinetInfo.auth.SystemUser;
-import local.clinic1.CabinetInfo.exceptions.PermissionDeniedException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -37,29 +37,29 @@ public class PrinterController {
     }
 
     @PostMapping
+    @Authorized
     public ResponseEntity registration(@RequestBody Printer printer, SystemUser user) {
-        if (!user.isAdmin()) throw new PermissionDeniedException();
         printerService.addNewPrinter(printer);
         return ResponseEntity.ok("Printer was added");
     }
 
     @PutMapping("/{id}")
+    @Authorized
     public ResponseEntity updatePrinter(@PathVariable Long id, @RequestBody Printer printer, SystemUser user) {
-        if (!user.isAdmin()) throw new PermissionDeniedException();
         printerService.updateById(id, printer);
         return ResponseEntity.ok("Printer info updated");
     }
 
     @DeleteMapping("/del")
+    @Authorized
     public ResponseEntity deletePrinter(@RequestParam Long id, SystemUser user) {
-        if (!user.isAdmin()) throw new PermissionDeniedException();
         printerService.deletePrinter(id);
         return ResponseEntity.ok("Printer removed");
     }
 
     @GetMapping("/json")
+    @Authorized
     public ResponseEntity addDataFromJson(SystemUser user) {
-        if (!user.isAdmin()) throw new PermissionDeniedException();
         printerService.loadFromJson();
         return ResponseEntity.ok("JSON data loaded");
     }
