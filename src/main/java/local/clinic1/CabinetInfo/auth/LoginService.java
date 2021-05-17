@@ -6,7 +6,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,7 +17,6 @@ public class LoginService {
     private final SystemUserRepo systemUserRepo;
 
     private final Map<String, UserSession> sessions = new HashMap<>();
-    //    private final Map<String, SystemUser> users = new HashMap<>();
     private final BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
 //    {
