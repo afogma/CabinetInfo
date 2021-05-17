@@ -18,7 +18,6 @@ public class CabinetController {
 
     @GetMapping
     public List<Cabinet> showCabinetList() {
-
         return cabinetService.findAll();
     }
 

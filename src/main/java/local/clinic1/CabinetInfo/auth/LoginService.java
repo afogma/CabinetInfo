@@ -61,7 +61,6 @@ public class LoginService {
         if (request == null) throw new UserNotFoundException();
         var user = new SystemUser();
         user.setName(request.getUser());
-        user.setName(request.getUser());
         user.setPassword(encryption(request.getPassword()));
         user.setUserRole(request.getUserRole());
         systemUserRepo.save(user);
@@ -71,9 +70,9 @@ public class LoginService {
 
     public void logout(String session, String token) {
         var sessionToken = sessions.get(session).getToken();
+        var name = sessions.get(session).getUserName();
         if (!sessionToken.equals(token)) throw new AuthenticationFailedException();
         sessions.remove(session);
-        var name = sessions.get(session).getUserName();
         logger.info("{} logged out", name);
     }
 }

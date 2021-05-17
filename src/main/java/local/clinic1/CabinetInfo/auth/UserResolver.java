@@ -25,7 +25,7 @@ public class UserResolver implements HandlerMethodArgumentResolver {
     @Override
     public SystemUser resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) {
         var request = webRequest.getNativeRequest(HttpServletRequest.class);
-        var session = request.getHeader("session");
+        var session = request.getHeader("sessionId");
         var token = request.getHeader("token");
         var ipAddress = request.getHeader("ipAddress");
         var user = loginService.getUser(session, token);
