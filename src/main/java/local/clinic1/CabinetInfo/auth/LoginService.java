@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,6 +16,7 @@ import java.util.Map;
 public class LoginService {
 
     private final SystemUserRepo systemUserRepo;
+    private final HttpServletRequest servletRequest;
 
     private final Map<String, UserSession> sessions = new HashMap<>();
     //    private final Map<String, SystemUser> users = new HashMap<>();
@@ -38,7 +40,7 @@ public class LoginService {
         System.out.println("login password: " + login.getPassword());
         System.out.println("user password: " + user.getPassword());
 
-        var session = new UserSession(login.getUser());
+        var session = new UserSession(login.getUser(), servletRequest.getRemoteAddr());
         sessions.put(session.getSessionId(), session);
         return session;
     }
@@ -82,7 +84,7 @@ public class LoginService {
 
     public void logout(SystemUser user) {
         if (user == null) throw new UserNotFoundException();
-        var session = new UserSession(user.getName());
+        var session = new UserSession(user.getName(), servletRequest.getRemoteAddr());
         sessions.remove(session.getSessionId());
     }
 }
