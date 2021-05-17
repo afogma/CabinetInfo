@@ -1,9 +1,7 @@
 package local.clinic1.CabinetInfo.auth;
 
 import lombok.Data;
-import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.Base64;
 
 import static java.util.UUID.randomUUID;

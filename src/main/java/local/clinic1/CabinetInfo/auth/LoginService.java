@@ -16,7 +16,6 @@ import java.util.Map;
 public class LoginService {
 
     private final SystemUserRepo systemUserRepo;
-    private final HttpServletRequest servletRequest;
 
     private final Map<String, UserSession> sessions = new HashMap<>();
     //    private final Map<String, SystemUser> users = new HashMap<>();
@@ -29,7 +28,7 @@ public class LoginService {
 //        users.put("admin", user);
 //    }
 
-    public UserSession login(Login login) {
+    public UserSession login(Login login, String ipAddress) {
         var user = systemUserRepo.findByName(login.getUser());
         if (user == null) throw new AuthenticationFailedException();
         ;
@@ -40,7 +39,7 @@ public class LoginService {
         System.out.println("login password: " + login.getPassword());
         System.out.println("user password: " + user.getPassword());
 
-        var session = new UserSession(login.getUser(), servletRequest.getRemoteAddr());
+        var session = new UserSession(login.getUser(), ipAddress);
         sessions.put(session.getSessionId(), session);
         return session;
     }
@@ -82,9 +81,9 @@ public class LoginService {
         return user;
     }
 
-    public void logout(SystemUser user) {
+    public void logout(SystemUser user, String ipAddress) {
         if (user == null) throw new UserNotFoundException();
-        var session = new UserSession(user.getName(), servletRequest.getRemoteAddr());
+        var session = new UserSession(user.getName(), ipAddress);
         sessions.remove(session.getSessionId());
     }
 }

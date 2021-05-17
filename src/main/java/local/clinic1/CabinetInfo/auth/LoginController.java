@@ -5,6 +5,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RequiredArgsConstructor
@@ -12,10 +14,9 @@ public class LoginController {
 
     private final LoginService loginService;
 
-
     @PostMapping("/login")
-    public UserSession loginUser(@RequestBody Login login) {
-        return loginService.login(login);
+    public UserSession loginUser(@RequestBody Login login, HttpServletRequest request) {
+        return loginService.login(login, request.getRemoteAddr());
     }
 
     @PostMapping("/registration")
@@ -28,8 +29,8 @@ public class LoginController {
     }
 
     @PostMapping("/logout")
-    public ResponseEntity UserLogout(SystemUser user) {
-        loginService.logout(user);
+    public ResponseEntity UserLogout(SystemUser user, HttpServletRequest request) {
+        loginService.logout(user, request.getRemoteAddr());
         return ResponseEntity.ok("logged out");
     }
 }
