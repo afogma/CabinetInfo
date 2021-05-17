@@ -29,8 +29,10 @@ public class LoginController {
     }
 
     @PostMapping("/logout")
-    public ResponseEntity UserLogout(SystemUser user, HttpServletRequest request) {
-        loginService.logout(user, request.getRemoteAddr());
+    public ResponseEntity UserLogout(HttpServletRequest request) {
+        var sessionId = request.getHeader("sessionId");
+        var token = request.getHeader("token");
+        loginService.logout(sessionId, token);
         return ResponseEntity.ok("logged out");
     }
 }

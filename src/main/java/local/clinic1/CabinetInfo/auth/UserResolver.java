@@ -27,8 +27,8 @@ public class UserResolver implements HandlerMethodArgumentResolver {
         var request = webRequest.getNativeRequest(HttpServletRequest.class);
         var session = request.getHeader("session");
         var token = request.getHeader("token");
-        var ipAddress = webRequest.getHeader("ipAddress");
-        var user = loginService.getUser(session, token, ipAddress);
+        var ipAddress = request.getHeader("ipAddress");
+        var user = loginService.getUser(session, token);
         if (user == null) throw new AuthenticationFailedException();
         return user;
     }
