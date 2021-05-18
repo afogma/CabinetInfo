@@ -1,6 +1,6 @@
 package local.clinic1.CabinetInfo.users;
 
-import lombok.*;
+import lombok.Data;
 
 import javax.persistence.*;
 
@@ -20,4 +20,5 @@ public class User {
 
     @Column(name = "pc_name")
     private String pcName;
+
 }

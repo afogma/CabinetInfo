@@ -3,7 +3,6 @@ package local.clinic1.CabinetInfo.users;
 import local.clinic1.CabinetInfo.auth.AuthorizationData;
 import local.clinic1.CabinetInfo.auth.Authorized;
 import local.clinic1.CabinetInfo.auth.SystemUser;
-import local.clinic1.CabinetInfo.exceptions.AuthenticationFailedException;
 import local.clinic1.CabinetInfo.exceptions.URLNotValidException;
 import local.clinic1.CabinetInfo.exceptions.UserNotFoundException;
 import local.clinic1.CabinetInfo.exceptions.UsersNotFoundException;
@@ -24,7 +23,6 @@ public class UserController {
     @GetMapping
     @Authorized
     public List<User> showAllUsers(AuthorizationData data) {
-        if (data == null) throw new AuthenticationFailedException();
         return userService.findAll();
     }
 

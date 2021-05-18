@@ -74,6 +74,12 @@ public class ComputerService {
         return listOfComputers;
     }
 
+    public List<Computer> findAllNoAuth() {
+        List<Computer> listOfComputers = computerRepo.findAll();
+        listOfComputers.sort(Comparator.comparing(Computer::getName));
+        return listOfComputers;
+    }
+
     public List<Computer> findAllByCabinet(int cabinet) {
         List<Computer> listOfPCsInCabinet = computerRepo.findAllByCabinet(cabinet);
         listOfPCsInCabinet.sort(Comparator.comparing(Computer::getCabinet));
@@ -107,5 +113,13 @@ public class ComputerService {
         } else {
             throw new URLNotValidException();
         }
+    }
+
+    public Computer findPCByNameNoAuth(String name) {
+        var pc = computerRepo.findByName(name);
+        if (pc == null) {
+            throw new ComputerNotFoundException();
+        }
+        return pc.withoutPassword();
     }
 }

@@ -1,6 +1,5 @@
 package local.clinic1.CabinetInfo.auth;
 
-import local.clinic1.CabinetInfo.exceptions.AuthenticationFailedException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.MethodParameter;
 import org.springframework.stereotype.Component;
@@ -19,17 +18,18 @@ public class UserResolver implements HandlerMethodArgumentResolver {
 
     @Override
     public boolean supportsParameter(MethodParameter methodParameter) {
-        return SystemUser.class.equals(methodParameter.getParameterType());
+        return AuthorizationData.class.equals(methodParameter.getParameterType());
     }
 
     @Override
-    public SystemUser resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) {
+    public AuthorizationData resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) {
         var request = webRequest.getNativeRequest(HttpServletRequest.class);
         var session = request.getHeader("sessionId");
         var token = request.getHeader("token");
-        var ipAddress = request.getHeader("ipAddress");
+//        var user = loginService.getUser(session, token);
+//        if (user == null) throw new AuthenticationFailedException();
+//        return user;
         var user = loginService.getUser(session, token);
-        if (user == null) throw new AuthenticationFailedException();
-        return user;
+        return new AuthorizationData(user != null);
     }
 }

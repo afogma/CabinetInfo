@@ -1,5 +1,6 @@
 package local.clinic1.CabinetInfo.computers;
 
+import local.clinic1.CabinetInfo.auth.AuthorizationData;
 import local.clinic1.CabinetInfo.auth.Authorized;
 import local.clinic1.CabinetInfo.auth.SystemUser;
 import local.clinic1.CabinetInfo.exceptions.ComputerAlreadyExistException;
@@ -25,7 +26,8 @@ public class ComputerController {
     }
 
     @GetMapping("/pc")
-    public Computer showComputerByName(@RequestParam String name) throws ComputerNotFoundException {
+    public Computer showComputerByName(@RequestParam String name, AuthorizationData data) throws ComputerNotFoundException {
+        if (data.isLoggedIn()) computerService.findPCByNameNoAuth(name);
         return computerService.findPCByName(name);
     }
 
