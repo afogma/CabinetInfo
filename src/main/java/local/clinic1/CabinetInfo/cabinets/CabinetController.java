@@ -26,7 +26,9 @@ public class CabinetController {
     }
 
     @GetMapping("/filter")
-    public List<Cabinet> showAllCabinetsByFloorOrDepartment(@RequestParam(required = false) String department, @RequestParam(required = false) Integer floor) {
+    public List<Cabinet> showAllCabinetsByFloorOrDepartment(
+            @RequestParam(required = false) String department,
+            @RequestParam(required = false) Integer floor) {
         return cabinetService.findAllByFloorOrDepartment(department, floor);
     }
 
@@ -39,7 +41,9 @@ public class CabinetController {
 
     @PutMapping("/{number}")
     @Authorized
-    public ResponseEntity<Cabinet> updateCabinet(@PathVariable int number, @RequestBody Cabinet cabinet) {
+    public ResponseEntity<Cabinet> updateCabinet(
+            @PathVariable int number,
+            @RequestBody Cabinet cabinet) {
         return ResponseEntity.ok(cabinetService.updateByNumber(number, cabinet));
     }
 

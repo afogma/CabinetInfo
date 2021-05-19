@@ -28,19 +28,6 @@ public class Computer {
     private String login;
     private String password;
 
-
-//    public Computer withoutPassword() {
-//        Computer computer = new Computer();
-//        computer.setName(this.getName());
-//        computer.setRam(this.getRam());
-//        computer.setProcessor(this.getProcessor());
-//        computer.setIpAddress(this.getIpAddress());
-//        computer.setCabinet(this.getCabinet());
-//        computer.setLogin(this.getLogin());
-//        computer.setPassword("");
-//        return computer;
-//    }
-
     public Computer withoutPassword() {
         return new Computer(
                 this.getName(),

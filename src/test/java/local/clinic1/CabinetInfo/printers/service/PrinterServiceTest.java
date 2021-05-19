@@ -59,13 +59,17 @@ class PrinterServiceTest {
 //    }
 
     @Test
-    void findAllByCabinet() {
+    void findAllByCabinetOrName() {
         List<Printer> printers = asList(getPrinter());
         Printer printer = getPrinter();
         when(printerRepo.findByCabinet(333)).thenReturn(printers);
-        List<Printer> listOfPrinters = printerService.findAllByCabinetOrName(333, "");
+        when(printerRepo.findByName("HP LaserJet 1606dn")).thenReturn(printers);
+        List<Printer> listOfPrinters = printerService.findAllByCabinetOrName(333, null);
+        List<Printer> listOfPrinters2 = printerService.findAllByCabinetOrName(null, "HP LaserJet 1606dn");
         assertEquals(listOfPrinters, printers);
+        assertEquals(listOfPrinters2, printers);
         verify(printerRepo).findByCabinet(printer.getCabinet());
+        verify(printerRepo).findByName(printer.getName());
     }
 
     @Test

@@ -27,12 +27,13 @@ public class LoginService {
         var user = systemUserRepo.findByName(login.getUser());
         if (user == null) throw new AuthenticationFailedException();
 
-        if (!bCryptPasswordEncoder.matches(login.getPassword(), user.getPassword()))
+        if (!bCryptPasswordEncoder.matches(login.getPassword(), user.getPassword())) {
+            logger.info("wrong password for user {} from ip: {}", user.getName(), ipAddress);
             throw new AuthenticationFailedException();
-
+        }
         var session = new UserSession(login.getUser(), ipAddress);
         sessions.put(session.getSessionId(), session);
-        logger.info("{} logged in", login);
+        logger.info("{} successfully logged in", login.getUser());
         return session;
     }
 

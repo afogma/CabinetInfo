@@ -26,7 +26,9 @@ public class PrinterController {
     }
 
     @GetMapping("/filter")
-    public List<Printer> showAllByCabinetOrName(@RequestParam(required = false) Integer cabinet, @RequestParam(required = false) String name){
+    public List<Printer> showAllByCabinetOrName(
+            @RequestParam(required = false) Integer cabinet,
+            @RequestParam(required = false) String name) {
         return printerService.findAllByCabinetOrName(cabinet, name);
     }
 

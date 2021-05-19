@@ -27,31 +27,21 @@ public class CabinetService {
 
     public Cabinet findByNumber(int number) {
         var cab = cabinetRepo.findByNumber(number);
-        if (cab == null) {
-            throw new CabinetNotFoundException();
-        }
+        if (cab == null) throw new CabinetNotFoundException();
         return cab;
     }
 
     public Cabinet addNewCabinet(Cabinet cabinet) {
-        if (cabinetRepo.findByNumber(cabinet.getNumber()) != null) {
-            throw new CabinetAlreadyExistException();
-        }
-        if (cabinet.getNumber() == 0 ) {
-            throw new WrongInputException();
-        }
+        if (cabinetRepo.findByNumber(cabinet.getNumber()) != null) throw new CabinetAlreadyExistException();
+        if (cabinet.getNumber() == 0) throw new WrongInputException();
         var cab = cabinetRepo.save(cabinet);
         logger.info("{} added", cab);
         return cab;
     }
 
     public Cabinet updateByNumber(int number, Cabinet cabinet) {
-        if (cabinetRepo.findByNumber(number) == null) {
-            throw new CabinetNotFoundException();
-        }
-        if (number != cabinet.getNumber()) {
-            throw new WrongInputException();
-        }
+        if (cabinetRepo.findByNumber(number) == null) throw new CabinetNotFoundException();
+        if (number != cabinet.getNumber()) throw new WrongInputException();
         var cab = cabinet;
         cab.setFloor(cabinet.getFloor());
         cab.setDepartment(cabinet.getDepartment());
@@ -62,11 +52,9 @@ public class CabinetService {
 
     public void deleteByNumber(int number) {
         var cab = cabinetRepo.findByNumber(number);
-        if (cab == null) {
-            throw new CabinetNotFoundException();
-        }
+        if (cab == null) throw new CabinetNotFoundException();
         cabinetRepo.delete(cab);
-        logger.info("{} deleted" , cabinetRepo.findByNumber(number));
+        logger.info("{} deleted", cabinetRepo.findByNumber(number));
     }
 
     public List<Cabinet> findAll() {
@@ -77,12 +65,8 @@ public class CabinetService {
 
     public List<Cabinet> findAllByFloorOrDepartment(String department, Integer floor) {
         List<Cabinet> list = new ArrayList<>();
-        if (department != null) {
-            list = cabinetRepo.findAllByDepartment(department);
-        }
-        if (floor != null) {
-            list = cabinetRepo.findAllByFloor(floor);
-        }
+        if (department != null) list = cabinetRepo.findAllByDepartment(department);
+        if (floor != null) list = cabinetRepo.findAllByFloor(floor);
         return list;
     }
 

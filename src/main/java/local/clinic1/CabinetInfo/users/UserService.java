@@ -30,7 +30,6 @@ public class UserService {
     }
 
 
-
     public User addNewUser(User user) {
         if (userRepo.findByName(user.getName()) != null) throw new UserAlreadyExistException();
         var usr = userRepo.save(user);
@@ -40,49 +39,37 @@ public class UserService {
 
     public User findByName(String name) {
         var user = userRepo.findByName(name);
-        if (user == null) {
-            throw new UserNotFoundException();
-        }
+        if (user == null) throw new UserNotFoundException();
         return user;
     }
 
     public User findById(Long id) {
         var user = userRepo.findUserById(id);
-        if (user == null) {
-            throw new UserNotFoundException();
-        }
+        if (user == null) throw new UserNotFoundException();
         return user;
     }
 
     public List<User> findAllByCabinet(int cabinet) {
         List<User> users = userRepo.findByCabinet(cabinet);
-        if (users.isEmpty()) {
-            throw new UsersNotFoundException();
-        }
+        if (users.isEmpty()) throw new UsersNotFoundException();
         return users;
     }
 
     public List<User> findAllByPCName(String pcName) {
-        List<User> users = userRepo.findBypcName(pcName);
-        if (users.isEmpty()) {
-            throw new UsersNotFoundException();
-        }
+        List<User> users = userRepo.findByPcName(pcName);
+        if (users.isEmpty()) throw new UsersNotFoundException();
         return users;
     }
 
     public List<User> findAllByPosition(String position) {
         List<User> users = userRepo.findByPosition(position);
-        if (users.isEmpty()) {
-            throw new UsersNotFoundException();
-        }
+        if (users.isEmpty()) throw new UsersNotFoundException();
         return users;
     }
 
     public List<User> findAllByDepartment(String department) {
         List<User> users = userRepo.findByDepartment(department);
-        if (users.isEmpty()) {
-            throw new UsersNotFoundException();
-        }
+        if (users.isEmpty()) throw new UsersNotFoundException();
         return users;
     }
 
@@ -100,14 +87,12 @@ public class UserService {
 
     public void deleteUser(Long id) {
         var user = userRepo.findUserById(id);
-        if (user == null) {
-            throw new UserNotFoundException();
-        }
+        if (user == null) throw new UserNotFoundException();
         userRepo.delete(user);
         logger.info("{} deleted", userRepo.findUserById(id));
     }
 
-        public void loadFromJson() {
+    public void loadFromJson() {
         var url = this.getClass().getClassLoader().getResource("user_data.json");
         if (url != null) {
             File jsonFile = new File(url.getFile());

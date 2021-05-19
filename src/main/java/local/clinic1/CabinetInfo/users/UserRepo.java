@@ -12,7 +12,7 @@ public interface UserRepo extends JpaRepository<User, Long> {
 
     List<User> findByCabinet(int cabinet);
 
-    List<User> findBypcName(String pcName);
+    List<User> findByPcName(String pcName);
 
     List<User> findByPosition(String position);
 

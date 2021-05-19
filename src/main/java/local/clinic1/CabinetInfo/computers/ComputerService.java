@@ -62,9 +62,8 @@ public class ComputerService {
     }
 
     public Computer updatePCByName(String name, Computer pc) {
-        var computer = computerRepo.findByName(name);
-        if (computer.equals(pc)) throw new WrongInputException();
         var comp = computerRepo.findByName(name);
+        if (comp.equals(pc)) throw new WrongInputException();
         comp.setRam(pc.getRam());
         comp.setProcessor(pc.getProcessor());
         comp.setIpAddress(pc.getIpAddress());

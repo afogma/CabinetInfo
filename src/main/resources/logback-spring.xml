@@ -8,8 +8,19 @@
                 <charset>UTF-8</charset>
             </encoder>
         </appender>
+        <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+            <file>logs/mylog.log</file>
+            <encoder>
+                <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n
+                </pattern>
+                <charset>UTF-8</charset>
+            </encoder>
+        </appender>
         <root level="info">
             <appender-ref ref="STDOUT"/>
+        </root>
+        <root level="debug">
+            <appender-ref ref="FILE"/>
         </root>
     </springProfile>
 </configuration>

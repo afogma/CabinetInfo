@@ -67,7 +67,7 @@ class UserServiceTest {
     @Test
     void findAllByPCName() {
         List<User> users = asList(getUser());
-        when(userRepo.findBypcName("kab333")).thenReturn(users);
+        when(userRepo.findByPcName("kab333")).thenReturn(users);
         List<User> usrs = userService.findAllByPCName("kab333");
         assertEquals(users, usrs);
     }

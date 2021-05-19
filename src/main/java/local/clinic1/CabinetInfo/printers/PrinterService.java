@@ -25,7 +25,7 @@ public class PrinterService {
 
     public List<Printer> findAll() {
         List<Printer> printers = printerRepo.findAll();
-        printers.sort(Comparator.comparing(Printer::getName));
+        printers.sort(Comparator.comparing(Printer::getCabinet));
         return printers;
     }
 
@@ -37,23 +37,15 @@ public class PrinterService {
 
     public Printer findPrinterById(Long id) {
         var printer = printerRepo.findPrinterById(id);
-        if (printer == null) {
-            throw new PrinterNotFoundException();
-        }
+        if (printer == null) throw new PrinterNotFoundException();
         return printer;
     }
 
     public List<Printer> findAllByCabinetOrName(Integer cabinet, String name) {
-        List <Printer> printers = new ArrayList<>();
-        if (cabinet != null) {
-            printers = printerRepo.findByCabinet(cabinet);
-        }
-        if (name != null) {
-            printers = printerRepo.findByName(name);
-        }
-        if (printers.isEmpty()) {
-            throw new PrintersNotFoundException();
-        }
+        List<Printer> printers = new ArrayList<>();
+        if (cabinet != null) printers = printerRepo.findByCabinet(cabinet);
+        if (name != null) printers = printerRepo.findByName(name);
+        if (printers.isEmpty()) throw new PrintersNotFoundException();
         return printers;
     }
 
@@ -71,9 +63,7 @@ public class PrinterService {
 
     public void deletePrinter(Long id) {
         var printer = printerRepo.findPrinterById(id);
-        if (printer == null) {
-            throw new PrinterNotFoundException();
-        }
+        if (printer == null) throw new PrinterNotFoundException();
         printerRepo.delete(printer);
         logger.info("{} deleted", printerRepo.findPrinterById(id));
     }
