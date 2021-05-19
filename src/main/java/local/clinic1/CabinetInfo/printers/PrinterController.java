@@ -1,7 +1,6 @@
 package local.clinic1.CabinetInfo.printers;
 
 import local.clinic1.CabinetInfo.auth.Authorized;
-import local.clinic1.CabinetInfo.auth.SystemUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,40 +25,35 @@ public class PrinterController {
         return printerService.findPrinterById(id);
     }
 
-    @PostMapping("/{name}")
-    public List<Printer> showAllByName(@PathVariable String name) {
-        return printerService.findAllByName(name);
-    }
-
-    @PostMapping("/filter")
-    public List<Printer> showAllByCabinet(@RequestParam int cabinet){
-        return printerService.findAllByCabinet(cabinet);
+    @GetMapping("/filter")
+    public List<Printer> showAllByCabinetOrName(@RequestParam(required = false) Integer cabinet, @RequestParam(required = false) String name){
+        return printerService.findAllByCabinetOrName(cabinet, name);
     }
 
     @PostMapping
     @Authorized
-    public ResponseEntity registration(@RequestBody Printer printer, SystemUser user) {
+    public ResponseEntity registration(@RequestBody Printer printer) {
         printerService.addNewPrinter(printer);
         return ResponseEntity.ok("Printer was added");
     }
 
     @PutMapping("/{id}")
     @Authorized
-    public ResponseEntity updatePrinter(@PathVariable Long id, @RequestBody Printer printer, SystemUser user) {
+    public ResponseEntity updatePrinter(@PathVariable Long id, @RequestBody Printer printer) {
         printerService.updateById(id, printer);
         return ResponseEntity.ok("Printer info updated");
     }
 
     @DeleteMapping("/del")
     @Authorized
-    public ResponseEntity deletePrinter(@RequestParam Long id, SystemUser user) {
+    public ResponseEntity deletePrinter(@RequestParam Long id) {
         printerService.deletePrinter(id);
         return ResponseEntity.ok("Printer removed");
     }
 
     @GetMapping("/json")
     @Authorized
-    public ResponseEntity addDataFromJson(SystemUser user) {
+    public ResponseEntity addDataFromJson() {
         printerService.loadFromJson();
         return ResponseEntity.ok("JSON data loaded");
     }

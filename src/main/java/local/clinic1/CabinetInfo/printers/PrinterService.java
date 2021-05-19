@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
@@ -42,16 +43,14 @@ public class PrinterService {
         return printer;
     }
 
-    public List<Printer> findAllByName(String name) {
-        List<Printer> printers = printerRepo.findByName(name);
-        if (printers.isEmpty()) {
-            throw new PrintersNotFoundException();
+    public List<Printer> findAllByCabinetOrName(Integer cabinet, String name) {
+        List <Printer> printers = new ArrayList<>();
+        if (cabinet != null) {
+            printers = printerRepo.findByCabinet(cabinet);
         }
-        return printers;
-    }
-
-    public List<Printer> findAllByCabinet(int cabinet) {
-        List <Printer> printers = printerRepo.findByCabinet(cabinet);
+        if (name != null) {
+            printers = printerRepo.findByName(name);
+        }
         if (printers.isEmpty()) {
             throw new PrintersNotFoundException();
         }

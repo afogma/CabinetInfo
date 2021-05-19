@@ -1,7 +1,6 @@
 package local.clinic1.CabinetInfo.cabinets;
 
 import local.clinic1.CabinetInfo.auth.Authorized;
-import local.clinic1.CabinetInfo.auth.SystemUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -33,27 +32,27 @@ public class CabinetController {
 
     @PostMapping
     @Authorized
-    public ResponseEntity registration(@RequestBody Cabinet cab, SystemUser user) {
+    public ResponseEntity registration(@RequestBody Cabinet cab) {
         cabinetService.addNewCabinet(cab);
         return ResponseEntity.ok("Cabinet successfully added");
     }
 
     @PutMapping("/{number}")
     @Authorized
-    public ResponseEntity<Cabinet> updateCabinet(@PathVariable int number, @RequestBody Cabinet cabinet, SystemUser user) {
+    public ResponseEntity<Cabinet> updateCabinet(@PathVariable int number, @RequestBody Cabinet cabinet) {
         return ResponseEntity.ok(cabinetService.updateByNumber(number, cabinet));
     }
 
     @DeleteMapping("/del")
     @Authorized
-    public ResponseEntity deleteCabinet(@RequestParam int number, SystemUser user) {
+    public ResponseEntity deleteCabinet(@RequestParam int number) {
         cabinetService.deleteByNumber(number);
         return ResponseEntity.ok("Cabinet deleted");
     }
 
     @GetMapping("/json")
     @Authorized
-    public ResponseEntity addDataFromJson(SystemUser user) {
+    public ResponseEntity addDataFromJson() {
         cabinetService.loadFromJson();
         return ResponseEntity.ok("JSON data loaded");
     }

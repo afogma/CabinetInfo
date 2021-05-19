@@ -68,7 +68,7 @@ class ComputerServiceTest {
     void findAll() {
         List<Computer> computers = asList(getComputer());
         when(computerRepo.findAll()).thenReturn(computers);
-        List<Computer> listOfPCs = computerService.findAll();
+        List<Computer> listOfPCs = computerService.findAll(true);
         assertEquals(listOfPCs, computers);
         verify(computerRepo).findAll();
     }
@@ -77,7 +77,7 @@ class ComputerServiceTest {
     void findAllByCabinet() {
         List<Computer> computers = asList(getComputer());
         when(computerRepo.findAllByCabinet(333)).thenReturn(computers);
-        List<Computer> cabs = computerService.findAllByCabinet(333);
+        List<Computer> cabs = computerService.findAllByCabinet(333, true);
         assertEquals(cabs, computers);
     }
 
@@ -86,8 +86,8 @@ class ComputerServiceTest {
         List<Computer> computers = asList(getComputer());
         when(computerRepo.findAllByRam("1gb")).thenReturn(computers);
         when(computerRepo.findAllByProcessor("intel core2duo")).thenReturn(computers);
-        List<Computer> pcs = computerService.findComputersByRamOrProcessor("1gb", null);
-        List<Computer> pcs2 = computerService.findComputersByRamOrProcessor(null, "intel core2duo");
+        List<Computer> pcs = computerService.findComputersByRamOrProcessor("1gb", null,true);
+        List<Computer> pcs2 = computerService.findComputersByRamOrProcessor(null, "intel core2duo", true);
         assertEquals(pcs, computers);
         assertEquals(pcs2, computers);
     }

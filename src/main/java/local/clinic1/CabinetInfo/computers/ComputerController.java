@@ -2,10 +2,6 @@ package local.clinic1.CabinetInfo.computers;
 
 import local.clinic1.CabinetInfo.auth.AuthorizationData;
 import local.clinic1.CabinetInfo.auth.Authorized;
-import local.clinic1.CabinetInfo.auth.SystemUser;
-import local.clinic1.CabinetInfo.exceptions.ComputerAlreadyExistException;
-import local.clinic1.CabinetInfo.exceptions.ComputerNotFoundException;
-import local.clinic1.CabinetInfo.exceptions.URLNotValidException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,50 +17,52 @@ public class ComputerController {
     private final ComputerService computerService;
 
     @GetMapping
-    public List<Computer> showAllComputers() {
-        return computerService.findAll();
+    public List<Computer> showAllComputers(AuthorizationData data) {
+        return computerService.findAll(data.isLoggedIn());
     }
 
-    @GetMapping("/pc")
-    public Computer showComputerByName(@RequestParam String name, AuthorizationData data) throws ComputerNotFoundException {
-        if (data.isLoggedIn()) computerService.findPCByNameNoAuth(name);
-        return computerService.findPCByName(name);
+    @GetMapping("/{name}")
+    public Computer showComputerByName(@PathVariable String name, AuthorizationData data) {
+        return computerService.findPCByName(name, data.isLoggedIn());
     }
 
-    @GetMapping("/cabinet")
-    public List<Computer> showAllByCabinet(@RequestParam int cabinet) {
-        return computerService.findAllByCabinet(cabinet);
+    @GetMapping("/cab")
+    public List<Computer> showAllByCabinet(@RequestParam int cabinet, AuthorizationData data) {
+        return computerService.findAllByCabinet(cabinet, data.isLoggedIn());
     }
 
     @GetMapping("/filter")
-    public List<Computer> showAllCabinetsByFloorOrDepartment(@RequestParam(required = false) String ram, @RequestParam(required = false) String processor) throws ComputerNotFoundException {
-        return computerService.findComputersByRamOrProcessor(ram, processor);
+    public List<Computer> showAllCabinetsByFloorOrDepartment(
+            @RequestParam(required = false) String ram,
+            @RequestParam(required = false) String processor,
+            AuthorizationData data) {
+        return computerService.findComputersByRamOrProcessor(ram, processor, data.isLoggedIn());
     }
 
     @PostMapping
     @Authorized
-    public ResponseEntity registration(@RequestBody Computer pc, SystemUser user) throws ComputerAlreadyExistException {
+    public ResponseEntity registration(@RequestBody Computer pc) {
         computerService.addNewPC(pc);
         return ResponseEntity.ok("Computer was added");
     }
 
     @PutMapping("/{name}")
     @Authorized
-    public ResponseEntity updateComputer(@PathVariable String name, @RequestBody Computer pc, SystemUser user) {
+    public ResponseEntity updateComputer(@PathVariable String name, @RequestBody Computer pc) {
         computerService.updatePCByName(name, pc);
         return ResponseEntity.ok("Computer info updated");
     }
 
     @DeleteMapping("/del")
     @Authorized
-    public ResponseEntity deleteComputer(@RequestParam String name, SystemUser user) throws ComputerNotFoundException {
+    public ResponseEntity deleteComputer(@RequestParam String name) {
         computerService.deletePCByName(name);
         return ResponseEntity.ok("Computer removed");
     }
 
     @GetMapping("/json")
     @Authorized
-    public ResponseEntity addDataFromJson(SystemUser user) throws URLNotValidException {
+    public ResponseEntity addDataFromJson() {
         computerService.loadFromJson();
         return ResponseEntity.ok("JSON data loaded");
     }

@@ -25,18 +25,37 @@ public class ComputerService {
 
     private final ComputerRepo computerRepo;
 
-    public Computer findPCByName(String name) throws ComputerNotFoundException {
+    public List<Computer> findAll(boolean isLoggedIn) {
+        List<Computer> computers = computerRepo.findAll();
+        if (!isLoggedIn) computers.forEach(p -> p.setPassword(""));
+        computers.sort(Comparator.comparing(Computer::getName));
+        return computers;
+    }
+
+    public Computer findPCByName(String name, boolean isLoggedIn) {
         var pc = computerRepo.findByName(name);
-        if (pc == null) {
-            throw new ComputerNotFoundException();
-        }
+        if (pc == null) throw new ComputerNotFoundException();
+        if (!isLoggedIn) return pc.withoutPassword();
         return pc;
     }
 
-    public Computer addNewPC(Computer pc) throws ComputerAlreadyExistException {
-        if (computerRepo.findByName(pc.getName()) != null) {
-            throw new ComputerAlreadyExistException();
-        }
+    public List<Computer> findAllByCabinet(int cabinet, boolean isLoggedIn) {
+        List<Computer> computersInCabinet = computerRepo.findAllByCabinet(cabinet);
+        if (!isLoggedIn) computersInCabinet.forEach(p -> p.setPassword(""));
+        computersInCabinet.sort(Comparator.comparing(Computer::getCabinet));
+        return computersInCabinet;
+    }
+
+    public List<Computer> findComputersByRamOrProcessor(String ram, String processor, boolean isLoggedIn) {
+        List<Computer> computers = new ArrayList<>();
+        if (ram != null) computers = computerRepo.findAllByRam(ram);
+        if (processor != null) computers = computerRepo.findAllByProcessor(processor);
+        if (!isLoggedIn) computers.forEach(p -> p.setPassword(""));
+        return computers;
+    }
+
+    public Computer addNewPC(Computer pc) {
+        if (computerRepo.findByName(pc.getName()) != null) throw new ComputerAlreadyExistException();
         var computer = computerRepo.save(pc);
         logger.info("{} added", computer);
         return computer;
@@ -44,9 +63,7 @@ public class ComputerService {
 
     public Computer updatePCByName(String name, Computer pc) {
         var computer = computerRepo.findByName(name);
-        if (computer.equals(pc)) {
-            throw new WrongInputException();
-        }
+        if (computer.equals(pc)) throw new WrongInputException();
         var comp = computerRepo.findByName(name);
         comp.setRam(pc.getRam());
         comp.setProcessor(pc.getProcessor());
@@ -59,45 +76,14 @@ public class ComputerService {
         return comp;
     }
 
-    public void deletePCByName(String name) throws ComputerNotFoundException {
+    public void deletePCByName(String name) {
         var pc = computerRepo.findByName(name);
-        if (pc == null) {
-            throw new ComputerNotFoundException();
-        }
+        if (pc == null) throw new ComputerNotFoundException();
         computerRepo.delete(pc);
         logger.info("{} deleted", computerRepo.findByName(name));
     }
 
-    public List<Computer> findAll() {
-        List<Computer> listOfComputers = computerRepo.findAll();
-        listOfComputers.sort(Comparator.comparing(Computer::getName));
-        return listOfComputers;
-    }
-
-    public List<Computer> findAllNoAuth() {
-        List<Computer> listOfComputers = computerRepo.findAll();
-        listOfComputers.sort(Comparator.comparing(Computer::getName));
-        return listOfComputers;
-    }
-
-    public List<Computer> findAllByCabinet(int cabinet) {
-        List<Computer> listOfPCsInCabinet = computerRepo.findAllByCabinet(cabinet);
-        listOfPCsInCabinet.sort(Comparator.comparing(Computer::getCabinet));
-        return listOfPCsInCabinet;
-    }
-
-    public List<Computer> findComputersByRamOrProcessor(String ram, String processor) {
-        List<Computer> list = new ArrayList<>();
-        if (ram != null) {
-            list = computerRepo.findAllByRam(ram);
-        }
-        if (processor != null) {
-            list = computerRepo.findAllByProcessor(processor);
-        }
-        return list;
-    }
-
-    public void loadFromJson() throws URLNotValidException {
+    public void loadFromJson() {
         var url = this.getClass().getClassLoader().getResource("computer_data.json");
         if (url != null) {
             File jsonFile = new File(url.getFile());
@@ -113,13 +99,5 @@ public class ComputerService {
         } else {
             throw new URLNotValidException();
         }
-    }
-
-    public Computer findPCByNameNoAuth(String name) {
-        var pc = computerRepo.findByName(name);
-        if (pc == null) {
-            throw new ComputerNotFoundException();
-        }
-        return pc.withoutPassword();
     }
 }

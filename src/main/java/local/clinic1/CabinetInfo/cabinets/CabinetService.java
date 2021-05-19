@@ -86,7 +86,7 @@ public class CabinetService {
         return list;
     }
 
-    public void loadFromJson() throws URLNotValidException {
+    public void loadFromJson() {
         var url = this.getClass().getClassLoader().getResource("cabinet_data.json");
         if (url != null) {
             var jsonFile = new File(url.getFile());
