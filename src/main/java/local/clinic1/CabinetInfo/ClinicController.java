@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class ClinicController {
 
     @GetMapping("/")
-    public String home() {
-        return "";
+    public String index() {
+        return "index";
     }
 }
