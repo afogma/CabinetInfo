@@ -1,5 +1,10 @@
 package local.clinic1.CabinetInfo.cabinets;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import local.clinic1.CabinetInfo.auth.Authorized;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -9,7 +14,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
-@RequestMapping("/cabinets")
+@RequestMapping("/api/cabinets")
 @RequiredArgsConstructor
 public class CabinetController {
 
@@ -25,6 +30,15 @@ public class CabinetController {
         return cabinetService.findByNumber(number);
     }
 
+    @Operation(summary = "Filter cabinet by either department or floor")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Found the cabinet",
+                    content = { @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = Cabinet.class)) }),
+            @ApiResponse(responseCode = "400", description = "Invalid data supplied",
+                    content = @Content),
+            @ApiResponse(responseCode = "404", description = "Cabinet not found",
+                    content = @Content)})
     @GetMapping("/filter")
     public List<Cabinet> showAllCabinetsByFloorOrDepartment(
             @RequestParam(required = false) String department,

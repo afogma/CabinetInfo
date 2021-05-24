@@ -11,7 +11,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
-@RequestMapping("/computers")
+@RequestMapping("/api/computers")
 public class ComputerController {
 
     private final ComputerService computerService;

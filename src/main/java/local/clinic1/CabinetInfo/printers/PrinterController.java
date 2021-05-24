@@ -10,7 +10,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
-@RequestMapping("/printers")
+@RequestMapping("/api/printers")
 public class PrinterController {
 
     private final PrinterService printerService;

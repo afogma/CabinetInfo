@@ -9,5 +9,4 @@ public class CabinetInfoApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(CabinetInfoApplication.class, args);
 	}
-
 }
