@@ -30,7 +30,7 @@ public class CabinetController {
         return cabinetService.findByNumber(number);
     }
 
-    @Operation(summary = "Filter cabinet by either department or floor")
+    @Operation(summary = "Filter cabinets by either department or floor")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Found the cabinet",
                     content = { @Content(mediaType = "application/json",
