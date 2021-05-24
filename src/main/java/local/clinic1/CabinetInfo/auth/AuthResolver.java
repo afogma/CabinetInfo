@@ -12,9 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 
 @Component
 @RequiredArgsConstructor
-public class UserResolver implements HandlerMethodArgumentResolver {
-
-    private final LoginService loginService;
+public class AuthResolver implements HandlerMethodArgumentResolver {
 
     @Override
     public boolean supportsParameter(MethodParameter methodParameter) {

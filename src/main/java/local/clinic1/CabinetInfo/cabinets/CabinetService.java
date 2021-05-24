@@ -13,9 +13,11 @@ import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+
+import static java.util.Collections.emptyList;
+import static java.util.stream.Collectors.toList;
 
 @Service
 @RequiredArgsConstructor
@@ -24,6 +26,18 @@ public class CabinetService {
     Logger logger = LoggerFactory.getLogger(CabinetService.class);
 
     private final CabinetRepo cabinetRepo;
+
+    public List<Cabinet> findAll() {
+        return cabinetRepo.findAll().stream()
+                .sorted(Comparator.comparing(Cabinet::getNumber))
+                .collect(toList());
+    }
+
+    public List<Cabinet> findAllByFloorOrDepartment(String department, Integer floor) {
+        if (department != null) return cabinetRepo.findAllByDepartment(department);
+        if (floor != null) return cabinetRepo.findAllByFloor(floor);
+        return emptyList();
+    }
 
     public Cabinet findByNumber(int number) {
         var cab = cabinetRepo.findByNumber(number);
@@ -55,19 +69,6 @@ public class CabinetService {
         if (cab == null) throw new CabinetNotFoundException();
         cabinetRepo.delete(cab);
         logger.info("{} deleted", cabinetRepo.findByNumber(number));
-    }
-
-    public List<Cabinet> findAll() {
-        List<Cabinet> listOfCabinets = cabinetRepo.findAll();
-        listOfCabinets.sort(Comparator.comparingInt(Cabinet::getNumber));
-        return listOfCabinets;
-    }
-
-    public List<Cabinet> findAllByFloorOrDepartment(String department, Integer floor) {
-        List<Cabinet> list = new ArrayList<>();
-        if (department != null) list = cabinetRepo.findAllByDepartment(department);
-        if (floor != null) list = cabinetRepo.findAllByFloor(floor);
-        return list;
     }
 
     public void loadFromJson() {

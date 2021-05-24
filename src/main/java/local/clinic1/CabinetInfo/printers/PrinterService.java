@@ -16,6 +16,8 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+import static java.util.stream.Collectors.toList;
+
 @Service
 @RequiredArgsConstructor
 public class PrinterService {
@@ -24,9 +26,9 @@ public class PrinterService {
     private final PrinterRepo printerRepo;
 
     public List<Printer> findAll() {
-        List<Printer> printers = printerRepo.findAll();
-        printers.sort(Comparator.comparing(Printer::getCabinet));
-        return printers;
+        return printerRepo.findAll().stream()
+                .sorted(Comparator.comparing(Printer::getCabinet))
+                .collect(toList());
     }
 
     public Printer addNewPrinter(Printer printer) {

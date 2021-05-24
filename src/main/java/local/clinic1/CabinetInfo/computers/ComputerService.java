@@ -17,6 +17,8 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+import static java.util.stream.Collectors.toList;
+
 @Service
 @RequiredArgsConstructor
 public class ComputerService {
@@ -26,10 +28,10 @@ public class ComputerService {
     private final ComputerRepo computerRepo;
 
     public List<Computer> findAll(boolean isLoggedIn) {
-        List<Computer> computers = computerRepo.findAll();
-        if (!isLoggedIn) computers.forEach(p -> p.setPassword(""));
-        computers.sort(Comparator.comparing(Computer::getName));
-        return computers;
+        return computerRepo.findAll().stream()
+                .sorted(Comparator.comparing(Computer::getName))
+                .map(c -> isLoggedIn ? c : c.withoutPassword())
+                .collect(toList());
     }
 
     public Computer findPCByName(String name, boolean isLoggedIn) {
@@ -40,10 +42,10 @@ public class ComputerService {
     }
 
     public List<Computer> findAllByCabinet(int cabinet, boolean isLoggedIn) {
-        List<Computer> computersInCabinet = computerRepo.findAllByCabinet(cabinet);
-        if (!isLoggedIn) computersInCabinet.forEach(p -> p.setPassword(""));
-        computersInCabinet.sort(Comparator.comparing(Computer::getCabinet));
-        return computersInCabinet;
+        return computerRepo.findAllByCabinet(cabinet).stream()
+                .sorted(Comparator.comparing(Computer::getCabinet))
+                .map(c -> isLoggedIn ? c : c.withoutPassword())
+                .collect(toList());
     }
 
     public List<Computer> findComputersByRamOrProcessor(String ram, String processor, boolean isLoggedIn) {

@@ -13,7 +13,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @Slf4j
 public class WebConfiguration implements WebMvcConfigurer {
-    private final UserResolver userResolver;
+    private final AuthResolver userResolver;
     private final LoginFilter loginFilter;
 
     @Override

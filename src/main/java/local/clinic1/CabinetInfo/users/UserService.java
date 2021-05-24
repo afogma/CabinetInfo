@@ -16,6 +16,8 @@ import java.io.IOException;
 import java.util.Comparator;
 import java.util.List;
 
+import static java.util.stream.Collectors.toList;
+
 @Service
 @RequiredArgsConstructor
 public class UserService {
@@ -24,11 +26,10 @@ public class UserService {
     private final UserRepo userRepo;
 
     public List<User> findAll() {
-        List<User> users = userRepo.findAll();
-        users.sort(Comparator.comparing(User::getName));
-        return users;
+        return userRepo.findAll().stream()
+                .sorted(Comparator.comparing(User::getName))
+                .collect(toList());
     }
-
 
     public User addNewUser(User user) {
         if (userRepo.findByName(user.getName()) != null) throw new UserAlreadyExistException();
