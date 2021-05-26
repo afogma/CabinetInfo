@@ -8,13 +8,22 @@
                 <charset>UTF-8</charset>
             </encoder>
         </appender>
-        <appender name="FILE" class="ch.qos.logback.core.FileAppender">
-            <file>logs/mylog.log</file>
+        <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <file>${LOG_PATH}/log.log</file>
             <encoder>
-                <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n
+                <pattern>
+                    %d{dd-MM-yyyy HH:mm:ss.SSS} [%thread] %-5level %logger{36}.%M - %msg%n
                 </pattern>
                 <charset>UTF-8</charset>
             </encoder>
+            <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+                <fileNamePattern>
+                    ${LOG_PATH}/archived/log_%d{dd-MM-yyyy}_%i.log.gz
+                </fileNamePattern>
+                <maxFileSize>1MB</maxFileSize>
+                <maxHistory>10</maxHistory>
+                <totalSizeCap>100MB</totalSizeCap>
+            </rollingPolicy>
         </appender>
         <root level="info">
             <appender-ref ref="STDOUT"/>

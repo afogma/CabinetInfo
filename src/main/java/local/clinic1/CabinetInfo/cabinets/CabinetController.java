@@ -25,6 +25,11 @@ public class CabinetController {
         return cabinetService.findAll();
     }
 
+    @GetMapping("/list")
+    public List<Integer> showAllCabinets() {
+        return cabinetService.findAllCabinets();
+    }
+
     @GetMapping("/{number}")
     public Cabinet showCabinetByNumber(@PathVariable int number) {
         return cabinetService.findByNumber(number);
@@ -33,8 +38,8 @@ public class CabinetController {
     @Operation(summary = "Filter cabinets by either department or floor")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Found the cabinet",
-                    content = { @Content(mediaType = "application/json",
-                            schema = @Schema(implementation = Cabinet.class)) }),
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = Cabinet.class))}),
             @ApiResponse(responseCode = "400", description = "Invalid data supplied",
                     content = @Content),
             @ApiResponse(responseCode = "404", description = "Cabinet not found",

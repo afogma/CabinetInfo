@@ -45,6 +45,13 @@ public class CabinetService {
         return cab;
     }
 
+    public List<Integer> findAllCabinets() {
+        return cabinetRepo.findAll().stream()
+                .map(x -> x.getNumber())
+                .sorted()
+                .collect(toList());
+    }
+
     public Cabinet addNewCabinet(Cabinet cabinet) {
         if (cabinetRepo.findByNumber(cabinet.getNumber()) != null) throw new CabinetAlreadyExistException();
         if (cabinet.getNumber() == 0) throw new WrongInputException();

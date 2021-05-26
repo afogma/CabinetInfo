@@ -1,8 +1,8 @@
 package local.clinic1.CabinetInfo.auth;
 
-import local.clinic1.CabinetInfo.cabinets.CabinetService;
 import local.clinic1.CabinetInfo.exceptions.AuthenticationFailedException;
-import local.clinic1.CabinetInfo.exceptions.UserNotFoundException;
+import local.clinic1.CabinetInfo.exceptions.UserAlreadyExistException;
+import local.clinic1.CabinetInfo.exceptions.WrongInputException;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,7 +16,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class LoginService {
 
-    Logger logger = LoggerFactory.getLogger(CabinetService.class);
+    Logger logger = LoggerFactory.getLogger(LoginService.class);
 
     private final SystemUserRepo systemUserRepo;
 
@@ -59,7 +59,8 @@ public class LoginService {
     }
 
     public SystemUser register(Login login) {
-        if (login == null) throw new UserNotFoundException();
+        if (login.getUser() == null || login.getPassword().isEmpty()) throw new WrongInputException();
+        if (systemUserRepo.findByName(login.getUser()) != null) throw new UserAlreadyExistException();
         var user = new SystemUser();
         user.setName(login.getUser());
         user.setPassword(encryption(login.getPassword()));
