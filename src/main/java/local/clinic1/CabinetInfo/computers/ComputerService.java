@@ -58,6 +58,7 @@ public class ComputerService {
 
     public Computer addNewPC(Computer pc) {
         if (computerRepo.findByName(pc.getName()) != null) throw new ComputerAlreadyExistException();
+        if (pc.getName().isEmpty()) throw new WrongInputException();
         var computer = computerRepo.save(pc);
         logger.info("{} added", computer);
         return computer;

@@ -20,7 +20,7 @@
                 <fileNamePattern>
                     ${LOG_PATH}/archived/log_%d{dd-MM-yyyy}_%i.log.gz
                 </fileNamePattern>
-                <maxFileSize>1MB</maxFileSize>
+                <maxFileSize>5MB</maxFileSize>
                 <maxHistory>10</maxHistory>
                 <totalSizeCap>100MB</totalSizeCap>
             </rollingPolicy>

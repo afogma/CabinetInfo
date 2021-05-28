@@ -73,7 +73,7 @@ public class CabinetController {
         return ResponseEntity.ok("Cabinet deleted");
     }
 
-    @GetMapping("/json")
+    @PostMapping("/json")
     @Authorized
     public ResponseEntity addDataFromJson() {
         cabinetService.loadFromJson();
